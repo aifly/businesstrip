@@ -59,7 +59,7 @@ var obserable = new Obserable();
 							        </Picker>
 								</aside>
 								<aside>
-									2
+									21
 								</aside>
 								<aside>
 									3
