@@ -390,7 +390,7 @@ babel-polyfill@^6.9.0:
     core-js "^2.4.0"
     regenerator-runtime "^0.10.0"
 
-babel-runtime@6.x, babel-runtime@^6.22.0, babel-runtime@^6.23.0:
+babel-runtime@6.x, babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.23.0:
   version "6.23.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.23.0.tgz#0a9489f144de70efb3ce4300accdb329e2fc543b"
   dependencies:
@@ -2838,6 +2838,13 @@ react-tween-state@^0.1.5:
     raf "^3.1.0"
     tween-functions "^1.0.1"
 
+react-weui@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-weui/-/react-weui-1.1.1.tgz#a2f9557ca73fba2d0f7199b95e7c20002f40a033"
+  dependencies:
+    babel-runtime "^6.18.0"
+    prop-types "^15.5.10"
+
 react@^15.4.1:
   version "15.6.1"
   resolved "https://registry.yarnpkg.com/react/-/react-15.6.1.tgz#baa8434ec6780bde997cdc380b79cd33b96393df"
@@ -3649,6 +3656,10 @@ websocket-driver@>=0.5.1:
 websocket-extensions@>=0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.1.tgz#76899499c184b6ef754377c2dbb0cd6cb55d29e7"
+
+weui@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/weui/-/weui-1.1.0.tgz#a6f4ba86bc0396a88360f104af0f51ba70bb9948"
 
 whatwg-fetch@>=0.10.0:
   version "2.0.3"
