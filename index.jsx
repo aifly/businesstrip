@@ -22,9 +22,9 @@ var obserable = new Obserable();
 			date = [];
 
 
-		var cYear = new Date().getFullYear();
+		var cYear = new Date().getFullYear()-5;
 
-		for(var i =0;i<100;i++){
+		for(var i =0;i<105;i++){
 			if (i<31){
 				date.push({
 					label:i+1<10?'0'+(i+1):i+1,
@@ -46,16 +46,24 @@ var obserable = new Obserable();
 
 
 		this.state = {
+			stateId:'',//国家id
 			showProvincePicker: false,
         	picker_value: '',
+        	busyLive:700,
         	currentCountry:'',
         	currentProvinceName:'',
         	currentProvinceId:-1,
         	logoImg:'./assets/images/showImage.jpg',
         	currentCityId:-1,
+        	currnetSelectProvinceIndex:0,//当前选择的省的索引
+        	currnetSelectCityIndex:0,//当前选择的市的索引
+        	reasonSelectIndex:0,//出差事由索引
+        	currentSelectJobIndex:0,
         	currentCityName:'',
         	defaultProvinceSelect:[0],
         	defaultCitySelect:[0],
+        	currentStartdateSelectIndex:[5,new Date().getMonth(),new Date().getDate()-1],
+        	currentEnddateSelectIndex:[5,new Date().getMonth(),new Date().getDate()-1],
 			provinceGroup: [{
 	                items: [
 	                    
@@ -92,7 +100,10 @@ var obserable = new Obserable();
 	        currentReasonName:'',
 	        currentReasonId:'',
 	        startdate:'',
-	        enddate:''
+	        enddate:'',
+	        indexClass:'active',
+	        resultClass:'right',
+	        noticeClass:'right'
 			
 		}
 		this.viewW = document.documentElement.clientWidth;
@@ -102,7 +113,7 @@ var obserable = new Obserable();
 	render() {
 		return (
 			<div className='zmiti-main-ui' >
-				 <section className='zmiti-index-page'>
+				 <section className={'zmiti-index-page '+this.state.indexClass}>
 					<header>出差宝</header>
 					<section className='zmiti-index-scroll-wrap' style={{height:this.viewH - 54}} ref='zmiti-index-scroll-wrap'>
 						<div>
@@ -168,63 +179,166 @@ var obserable = new Obserable();
 							</section>
 
 
+							<section onTouchTap={this.beginSearch.bind(this)} className='zmiti-index-ok'>
+								确定
+							</section>
 						</div>
 					</section>
 					
 				 </section>
-				 <section>
-				 	
-				 </section>
-				   <Picker
-				   		defaultSelect={[0]}
-	                    onChange={selected=>{
-	                        let value = '',
-	                        	label = '',
-	                        	currentCityId = -1,
-	                        	currentCityName = '';
+				<section className={'zmiti-result-page lt-full '+ this.state.resultClass}>
+					 <div style={{background:'#fff url(./assets/images/backImage.png) no-repeat center top / cover'}}></div>
+					 <header>
+					 	<div onTouchTap={()=>{this.setState({indexClass:'active',resultClass:'right'})}}><img src='./assets/images/back@2x.png'/></div>
+					 	<div>{this.state.currentJobName + "人员出差标准"}</div>
+					 	<div></div>
+					 </header>
+					 <section ref='result-page' style={{height:this.viewH - 55}}>
+					 	<div>
+					 		<article>
+					 			{this.state.currentCityName}<span>北京时间：{this.state.beiJingTime}</span>
+					 		</article>
+					 		<div className='zmiti-result-date'>
+					 			<aside>{this.state.startdate}</aside>
+					 			<aside></aside>
+					 			<aside>{this.state.enddate}</aside>
+					 		</div>
 
-	                        selected.forEach( (s, i)=> {
-	                            value = this.state.provinceGroup[i]['items'][s].value;
-	                            label = this.state.provinceGroup[i]['items'][s].label;
-	                        	currentCityId = this.defaultProvince[s].cities[0].cityId;
-	                        	currentCityName = this.defaultProvince[s].cities[0].name;
-	                        	this.state.cityGroup[0].items.length = 0;
-	                        	this.defaultProvince[s].cities.map((list,i)=>{
-									this.state.cityGroup[0].items.push({
-										label:list.name,
-										value:list.cityId
-									})
-								});
-	                        })
-	                        this.setState({
-	                        	defaultCitySelect:[0],
-	                            currentProvinceId: value,
-	                            currentProvinceName:label,
-	                            showProvincePicker: false,
-	                            currentCityId,
-	                            currentCityName
-	                        })
-	                    }}
-	                    lang={{ leftBtn: '取消', rightBtn: '确定' }}
-	                    groups={this.state.provinceGroup}
-	                    show={this.state.showProvincePicker}
-	                   	onCancel={e=>{this.setState({showProvincePicker: false})}}
-	                />
+					 		<section className='zmiti-travel-standard'>
+					 			<div>
+					 				<h2>交通标准</h2>
+					 				<section className='zmiti-result-train'>
+					 					<img src='./assets/images/haveTrain.png'/>
+					 					<span>{this.state.train}</span>
+					 				</section>
+					 				<section className='zmiti-result-travels'>
+					 					<aside>
+					 						<img src='./assets/images/haveHight.png'/>
+					 						<span>{this.state.hightSpeedRail}</span>
+					 					</aside>
+					 					<aside>
+					 						<img src='./assets/images/haveSofe.png'/>
+					 						<span>{this.state.soft}</span>
+					 					</aside>
+					 				</section>
+					 				<section className='zmiti-result-travels'>
+					 					<aside>
+					 						<img src='./assets/images/haveSteamer.png'/>
+					 						<span>{this.state.steamer}</span>
+					 					</aside>
+					 					<aside>
+					 						<img src='./assets/images/haveAir.png'/>
+					 						<span>{this.state.air}</span>
+					 					</aside>
+					 				</section>
+					 				<h2>住宿标准</h2>
+					 				{!(this.state.live && this.state.busyLive) && <section className='zmiti-stay'>
+					 					<span>{this.state.live||this.state.busyLive}</span>元/天
+					 				</section>}
+
+					 				{this.state.live && this.state.busyLive && <section className='zmiti-stay'>
+					 					<aside>淡季：<span>{this.state.live}</span>元/天</aside>
+					 					<aside></aside>
+					 					<aside>旺季：<span>{this.state.busyLive}</span>元/天</aside>
+					 				</section>}
+					 				
+					 				<section className='zmiti-food-travel'>
+					 					<aside>
+					 						<h2>伙食补助费</h2>
+					 						<div><span>{this.state.food}</span>元 <label>({this.state.food}元/天)</label></div>
+					 					</aside>
+					 					<aside>
+					 						<h2>交通费</h2>
+					 						<div><span>{this.state.traffic}</span>元 <label>({this.state.traffic}元/天)</label></div>
+					 					</aside>
+					 				</section>
+					 				<section className='zmiti-result-remark'>
+					 					{this.state.reasonType === 1 && <span>依据{this.state.currentReasonName}标准，您出差补助共{this.state.subsidy}元</span>}
+					 					{this.state.reasonType === 2  &&<span>依据{this.state.currentReasonName}标准,您共出差{this.state.day}天，可得补助{this.state.subsidy}元</span>}
+					 				</section>
+
+					 				<h2>发票信息</h2>
+					 				<section className='zmiti-result-invoice'>
+					 					<div>抬<span style={{opacity:0}}>税人识别</span>头：<label>中国人民银行营业管理部</label></div>
+					 					<div>纳税人识别号：<label>11100000H52630606M</label></div>
+					 				</section>
+
+					 				<section className='zmiti-notice'>
+					 					<span onTouchTap={this.getNotice.bind(this)}>注意事项</span>
+					 				</section>
+
+					 			</div>
+					 		</section>
+					 	</div>
+					 </section>
+				</section>
+
+				<section className={'zmiti-notice-page lt-full '+this.state.noticeClass}>
+					 <header>
+					 	<div  onTouchTap={()=>{this.setState({noticeClass:'right',resultClass:'active'})}}><img src='./assets/images/back@2x.png'/></div>
+					 	<div>注意事项</div>
+					 	<div></div>
+					 </header>
+					 <section style={{height:this.viewH - 55}} className='zmiti-notice-wrap' ref='zmiti-notice-wrap'>
+					 	<div  dangerouslySetInnerHTML={this.createMarkup()}></div>
+					 </section>
+				</section>
+				   {this.state.showProvincePicker&&<Picker
+				   				   		defaultSelect={[this.state.currnetSelectProvinceIndex]}
+				   	                    onChange={selected=>{
+				   	                        let value = '',
+				   	                        	label = '',
+				   	                        	currentCityId = -1,
+				   	                        	currentCityName = '';
+				   							var index = -1;
+				   	                        selected.forEach( (s, i)=> {
+				   	                            value = this.state.provinceGroup[i]['items'][s].value;
+				   	                            label = this.state.provinceGroup[i]['items'][s].label;
+				   	                        	currentCityId = this.defaultProvince[s].cities[0].cityId;
+				   	                        	index = s;
+				   	                        	currentCityName = this.defaultProvince[s].cities[0].name;
+				   	                        	this.state.cityGroup[0].items.length = 0;
+				   	                        	this.defaultProvince[s].cities.map((list,i)=>{
+				   									this.state.cityGroup[0].items.push({
+				   										label:list.name,
+				   										value:list.cityId
+				   									})
+				   								});
+				   	                        })
+				   	                        this.setState({
+				   	                        	defaultCitySelect:[0],
+				   	                            currentProvinceId: value,
+				   	                            currentProvinceName:label,
+				   	                            showProvincePicker: false,
+				   	                            currnetSelectCityIndex:0,
+				   	                            currnetSelectProvinceIndex:index,
+				   	                            currentCityId,
+				   	                            currentCityName
+				   	                        })
+				   	                    }}
+				   	                    lang={{ leftBtn: '取消', rightBtn: '确定' }}
+				   	                    groups={this.state.provinceGroup}
+				   	                    show={this.state.showProvincePicker}
+				   	                   	onCancel={e=>{this.setState({showProvincePicker: false})}}
+				   	                />}
 	                {this.state.showCityPicker && <Picker
-	                	                 	defaultSelect={this.state.defaultCitySelect}
+	                	                 	defaultSelect={[this.state.currnetSelectCityIndex]}
 	                	                    onChange={selected=>{
 	                	                        let value = '',
 	                	                        	label = '',
 	                	                        	currentCityId = -1,
-	                	                        	currentCityName = '';
+	                	                        	currentCityName = '',
+	                	                        	index = -1;;
 	                
 	                	                        selected.forEach( (s, i)=> {
+	                	                        	index = s ;
 	                	                            value = this.state.cityGroup[i]['items'][s].value;
 	                	                            label = this.state.cityGroup[i]['items'][s].label;
 	                	                        })
 	                	                        this.setState({
 	                	                            currentCityId: value,
 	                	                            currentCityName:label,
+	                	                            currnetSelectCityIndex:index,
 	                	                            showCityPicker: false,
 	                	                            defaultCitySelect:selected
 	                	                        })
@@ -235,21 +349,18 @@ var obserable = new Obserable();
 	                	                   	onCancel={e=>{this.setState({showCityPicker: false})}}
 	                	                />}
 
-	           						 {this.state.startdate && <Picker
+	           						 {this.state.showDatePicker && <Picker
 	            					   className='zmiti-date-picker'
-	            				   		defaultSelect={[
-	            				   						0,
-	            				   						this.state[this.selectedDateType||'startdate'].split('-')[1]-1,
-	            				   						
-	            				   						this.state[this.selectedDateType||'startdate'].split('-')[2]*1-1
-	            				   						]}
+	            				   		defaultSelect={this.state.currentStartdateSelectIndex}
 	            	                    onChange={selected=>{
 	            	                    	
-
-	            	                         this.setState({
-	            	                        
+	            	                        this.setState({
+	            	                        	currentStartdateSelectIndex:selected,
 	            	                            showDatePicker: false,
-	            	                        })
+	            	                        });
+
+	            	                        var val =this.selectedDateType ==='startdate'? 'startdate1':'enddate1';
+	            	                    	this[val] = this.state[this.selectedDateType];
 
 
 	            	                    }}
@@ -277,68 +388,146 @@ var obserable = new Obserable();
 	            	                    	if(day>this.getDaysInOneMonth(year,month)){
 	            	                    		day=this.getDaysInOneMonth(year,month);
 	            	                    	}
+	            	                    	
+
 	            	                    	this.setState({
 	            	                    		[this.selectedDateType]:[year,month,day].join('-')
 	            	                    	})
 	            	                    
 	            	                    }}
 	            	                    show={this.state.showDatePicker}
-	            	                   	onCancel={e=>{this.setState({showDatePicker: false})}}
+	            	                   	onCancel={e=>{
+
+	            	                   		var val =this.selectedDateType ==='startdate'? 'startdate1':'enddate1';
+	            	                   		this.setState({showDatePicker: false,[this.selectedDateType]:this[val]},()=>{
+	            	                   			this.state.currentStartdateSelectIndex = [this.state.startdate.split('-')[0]*1-new Date().getFullYear()+5,this.state.startdate.split('-')[1]*1-1,this.state.startdate.split('-')[2]*1-1];
+	            	                   			this.forceUpdate();
+	            	                   		})
+	            	                   	}}
 	            	                />}
 
-    	                <Picker
-					   		defaultSelect={[0]}
-		                    onChange={selected=>{
-		                        let value = '',
-		                        	label = '';
+	            	                {this.state.showDateEndPicker && <Picker
+	            					   className='zmiti-date-picker'
+	            				   		defaultSelect={this.state.currentEnddateSelectIndex}
+	            	                    onChange={selected=>{
+	            	                    	
 
-		                        selected.forEach( (s, i)=> {
-		                            value = this.state.reasonGroup[i]['items'][s].value;
-		                            label = this.state.reasonGroup[i]['items'][s].label;
-		                        })
-		                        this.setState({
-		                            showReasonPicker: false,
-		                            currentReasonId:value,
-		                            currentReasonName:label
-		                        })
-		                    }}
-		                    lang={{ leftBtn: '取消', rightBtn: '确定' }}
-		                    groups={this.state.reasonGroup}
-		                    show={this.state.showReasonPicker}
-		                   	onCancel={e=>{this.setState({showReasonPicker: false})}}
-		                />
+	            	                         this.setState({
+	            	                        	currentEnddateSelectIndex:selected,
+	            	                            showDateEndPicker: false,
+	            	                        });
 
-		                 <Picker
-					   		defaultSelect={[0]}
-		                    onChange={selected=>{
-		                        let value = '',
-		                        	label = '',
-		                        	currentCityId = -1,
-		                        	currentCityName = '';
+	            	                        var val =this.selectedDateType ==='startdate'? 'startdate1':'enddate1';
+	            	                    	this[val] = this.state[this.selectedDateType];
 
-		                        selected.forEach( (s, i)=> {
-		                            value = this.state.jobGroup[i]['items'][s].value;
-		                            label = this.state.jobGroup[i]['items'][s].label;
-		                        })
-		                        this.setState({
-		                            showJobPicker: false,
-		                            currentJobId:value,
-		                            currentJobName:label
-		                        })
-		                    }}
-		                    lang={{ leftBtn: '取消', rightBtn: '确定' }}
-		                    groups={this.state.jobGroup}
-		                    show={this.state.showJobPicker}
-		                   	onCancel={e=>{this.setState({showJobPicker: false})}}
-		                />
+
+	            	                    }}
+	            	                    lang={{ leftBtn: '取消', rightBtn: '确定' }}
+	            	                    groups={this.state.dateGroup}
+	            	                    onGroupChange={(selected)=>{
+	            	                    	var index = selected.value.split('-')[0]*1;
+	            	                    	var year = this.state[this.selectedDateType].split('-')[0];
+	            	                    	var month = this.state[this.selectedDateType].split('-')[1];
+	            	                    	var day =this.state[this.selectedDateType].split('-')[2];
+	            	                    	switch(index){
+	            	                    		case 0:
+	            	                    		year = selected.label;
+	            	                    		this.fixDay(year,month);
+	            	                    		break;
+	            	                    		case 1:
+	            	                    		 month = selected.label;
+	            	                    		 var count = this.getDaysInOneMonth(year,month);
+	            	                    		 this.fixDay(year,month);
+	            	                    		break;
+	            	                    		case 2:
+	            	                    		day = selected.label;
+	            	                    		break;
+	            	                    	}
+	            	                    	if(day>this.getDaysInOneMonth(year,month)){
+	            	                    		day=this.getDaysInOneMonth(year,month);
+	            	                    	}
+	            	                    	
+
+	            	                    	this.setState({
+	            	                    		[this.selectedDateType]:[year,month,day].join('-')
+	            	                    	})
+	            	                    
+	            	                    }}
+	            	                    show={this.state.showDateEndPicker}
+	            	                   	onCancel={e=>{
+	            	                   		var val =this.selectedDateType ==='startdate'? 'startdate1':'enddate1';
+	            	                   		this.setState({showDateEndPicker: false,[this.selectedDateType]:this[val]},()=>{
+	            	                   			this.state.currentEnddateSelectIndex = [this.state.enddate.split('-')[0]*1-new Date().getFullYear()+5,this.state.enddate.split('-')[1]*1-1,this.state.enddate.split('-')[2]*1-1];
+	            	                   			this.forceUpdate();
+	            	                   		})
+	            	                   	}}
+	            	                />}
+
+    	                {this.state.showReasonPicker&&<Picker
+    	                					   		defaultSelect={[this.state.reasonSelectIndex]}
+    	                		                    onChange={selected=>{
+    	                		                        let value = '',
+    	                		                        	label = '',
+    	                		                        	index = -1;
+    	                
+    	                		                        selected.forEach( (s, i)=> {
+    	                		                        	index = s;
+    	                		                            value = this.state.reasonGroup[i]['items'][s].value;
+    	                		                            label = this.state.reasonGroup[i]['items'][s].label;
+    	                		                        })
+    	                		                        this.setState({
+    	                		                            showReasonPicker: false,
+    	                		                            reasonSelectIndex:index,
+    	                		                            currentReasonId:value,
+    	                		                            currentReasonName:label
+    	                		                        })
+    	                		                    }}
+    	                		                    lang={{ leftBtn: '取消', rightBtn: '确定' }}
+    	                		                    groups={this.state.reasonGroup}
+    	                		                    show={this.state.showReasonPicker}
+    	                		                   	onCancel={e=>{this.setState({showReasonPicker: false})}}
+    	                		                />}
+
+		                {this.state.showJobPicker && <Picker
+		                					   		defaultSelect={[this.state.currentSelectJobIndex]}
+		                		                    onChange={selected=>{
+		                		                        let value = '',
+		                		                        	label = '',
+		                		                        	currentCityId = -1,
+		                		                        	currentCityName = '',
+		                		                        	index = 0;;
+		                
+		                		                        selected.forEach( (s, i)=> {
+		                		                        	index = s;
+		                		                            value = this.state.jobGroup[i]['items'][s].value;
+		                		                            label = this.state.jobGroup[i]['items'][s].label;
+		                		                        })
+		                		                        this.setState({
+		                		                            showJobPicker: false,
+		                		                            currentJobId:value,
+		                		                            currentJobName:label,
+		                		                            currentSelectJobIndex:index
+		                		                        })
+		                		                    }}
+		                		                    lang={{ leftBtn: '取消', rightBtn: '确定' }}
+		                		                    groups={this.state.jobGroup}
+		                		                    show={this.state.showJobPicker}
+		                		                   	onCancel={e=>{this.setState({showJobPicker: false})}}
+		                		                />}
 			</div>
 		);
 	}
 
+	createMarkup(){
+		 return {__html:  this.state.notice};
+	}
+
 	selectedDate(type,e){
 		e.preventDefault();
+		var val = type === 'startdate'? 'showDatePicker':'showDateEndPicker';
+		//console.log(val,this.state.currentStartdateSelectIndex)
 		this.setState({
-			showDatePicker:true
+			[val]:true
 		});
 		this.selectedDateType = type;
 
@@ -355,12 +544,12 @@ var obserable = new Obserable();
 
 	fixDay(year,month){
 
-		console.log(year,month);
+	
 		
 		var count = this.getDaysInOneMonth(year,month);
 
 		var arr = [];
-		for(var i = 0;i<count;i++){
+		for(var i = 0;i <count;i++){
 			arr.push({
 				label:i+1<10?'0'+(i+1):i+1,
 				value:'2-'+(i+1<10?'0'+(i+1):i+1),
@@ -388,20 +577,35 @@ var obserable = new Obserable();
 			scrollbars:true
 		});
 
-		setTimeout(()=>{
-			this.scroll.refresh();
-		},100);
+		this.resultScroll = new IScroll(this.refs['result-page'],{
+			scrollbars:true
+		});
 
+		this.noticeScroll = new IScroll(this.refs['zmiti-notice-wrap'],{
+			scrollbars:true
+		})
+
+	 
 		this.state.dateGroup[2].items.length = 0;
 
 
+		var D = new Date();
+
+		this.state.currentStartdateSelectIndex = [5,this.format(D).split('-')[1]*1-1,this.format(D).split('-')[2]*1-1];
+		this.state.currentEnddateSelectIndex = [5,this.format(D).split('-')[1]*1-1,this.format(D).split('-')[2]*1-1];
 
 		this.setState({
-			startdate:this.format(new Date()),
-			enddate:this.format(new Date())
-		})
+			startdate:this.format(D),
+			enddate:this.format(D)
+		});
 
-		var date = new Date();
+		this['startdate1'] =this['enddate1'] = this.format(D);
+
+
+
+
+
+		var date = D;
 		var year = date.getFullYear();
 		var month = date.getMonth()+1;
 		this.fixDay(year,month);
@@ -436,7 +640,7 @@ var obserable = new Obserable();
 					})
 				});
 				this.state.currentProvinceId = data.result.citys[0].list[0].provinceId;
-
+				this.state.stateId = data.result.citys[0].stateId;
 				this.state.currentProvinceName = data.result.citys[0].list[0].name;
 				this.state.currentCityId = data.result.citys[0].list[0].cities[0].cityId;
 				this.state.currentCityName = data.result.citys[0].list[0].cities[0].name;
@@ -461,7 +665,69 @@ var obserable = new Obserable();
 
 				this.state.logoImg = data.result.logoImage;
 
-				this.forceUpdate();
+			
+				
+				this.forceUpdate(()=>{
+					setTimeout(()=>{
+						this.scroll.refresh();
+					},100)
+				});
+
+			}
+		});
+	}
+
+	beginSearch(){
+
+
+		$.ajax({	
+			type:'post',
+			url:window.baseUrl+'travel/get_travecost/',
+			data:{
+
+				companyid:window.companyid,
+				countryid:this.state.stateId,
+				provinceid:this.state.currentProvinceId,
+				cityid:this.state.currentCityId,
+				traveltime:this.state.startdate,
+				traveltime2:this.state.enddate,
+				joblevelid:this.state.currentJobId,
+				tripcode:this.state.currentReasonId//'h7Wmv3d'//
+			}
+		}).done((data)=>{
+			if(typeof data === 'string'){
+				data = JSON.parse(data);
+			}
+			if(data.getret === 0 ){
+				this.state.indexClass = 'left';
+				this.state.resultClass = 'active';
+
+				this.setState(data.result,()=>{
+					this.resultScroll.refresh();
+				});
+			}
+		});
+	}
+
+	getNotice(){
+		$.ajax({
+			type:'post',
+			url:window.baseUrl+'travel/get_notice/',
+			data:{
+				companyid:window.companyid
+			}
+		}).done((data)=>{
+			if(typeof data === 'string'){
+				data = JSON.parse(data);
+			}
+			if(data.getret === 0){
+				this.setState({
+					resultClass:'left',
+					noticeClass:'active',
+					notice:data.notice
+				},()=>{
+					this.noticeScroll.refresh();
+				})
 			}
 		})
 	}

@@ -64,7 +64,17 @@ input, textarea {
   .zmiti-main-ui .weui-picker__indicator {
     box-sizing: border-box; }
   .zmiti-main-ui .zmiti-index-page {
-    width: 100%; }
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    width: 100%;
+    position: relative;
+    z-index: 10; }
+    .zmiti-main-ui .zmiti-index-page.active {
+      -webkit-transform: translate3d(0, 0, 0) scale(1);
+      transform: translate3d(0, 0, 0) scale(1); }
+    .zmiti-main-ui .zmiti-index-page.left {
+      -webkit-transform: translate3d(-5rem, 0, 0) scale(1);
+      transform: translate3d(-5rem, 0, 0) scale(1); }
     .zmiti-main-ui .zmiti-index-page > header {
       width: 100%;
       height: 44px;
@@ -79,9 +89,9 @@ input, textarea {
       box-sizing: border-box; }
       .zmiti-main-ui .zmiti-index-page .zmiti-index-scroll-wrap > div {
         padding-bottom: 1rem; }
-      .zmiti-main-ui .zmiti-index-page .zmiti-index-scroll-wrap .iScrollVerticalScrollbar.iScrollLoneScrollbar {
+      .iScrollVerticalScrollbar.iScrollLoneScrollbar {
         width: 2px !important; }
-        .zmiti-main-ui .zmiti-index-page .zmiti-index-scroll-wrap .iScrollVerticalScrollbar.iScrollLoneScrollbar > div {
+        .iScrollVerticalScrollbar.iScrollLoneScrollbar > div {
           border: none !important; }
     .zmiti-main-ui .zmiti-index-page .zmiti-trip {
       width: 100%;
@@ -160,6 +170,15 @@ input, textarea {
             margin-left: .4rem; }
           .zmiti-main-ui .zmiti-index-page .zmiti-trip > div .zmiti-trip-date > aside:before, .zmiti-main-ui .zmiti-index-page .zmiti-trip > div .zmiti-trip-date > aside:after {
             display: none; }
+    .zmiti-main-ui .zmiti-index-page .zmiti-index-ok {
+      width: 9rem;
+      height: 1rem;
+      background: #007aff;
+      color: #fff;
+      text-align: center;
+      line-height: 1rem;
+      margin: 0 auto;
+      border-radius: 0.1rem; }
   .zmiti-main-ui .zmiti-date-picker .weui-picker__group:nth-of-type(2) .weui-picker__mask:after {
     content: "月"; }
   .zmiti-main-ui .zmiti-date-picker .weui-picker__group:nth-of-type(3) .weui-picker__mask:after {
@@ -171,5 +190,243 @@ input, textarea {
     color: #007aff;
     right: .32rem;
     position: absolute; }
+  .zmiti-main-ui .zmiti-result-page {
+    background: #fff;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    z-index: 5220; }
+    .zmiti-main-ui .zmiti-result-page.right {
+      -webkit-transform: translate3d(10rem, 0, 0) scale(0.8);
+      transform: translate3d(10rem, 0, 0) scale(0.8); }
+    .zmiti-main-ui .zmiti-result-page.active {
+      -webkit-transform: translate3d(0, 0, 0) scale(1);
+      transform: translate3d(0, 0, 0) scale(1); }
+    .zmiti-main-ui .zmiti-result-page.left {
+      -webkit-transform: translate3d(-5rem, 0, 0) scale(1);
+      transform: translate3d(-5rem, 0, 0) scale(1); }
+    .zmiti-main-ui .zmiti-result-page > div {
+      width: 100%;
+      height: 35%;
+      position: absolute;
+      left: 0;
+      top: 0; }
+    .zmiti-main-ui .zmiti-result-page > header {
+      height: 44px;
+      padding-top: 10px;
+      top: 0;
+      position: absolute;
+      width: 100%;
+      left: 0;
+      display: -webkit-box;
+      -webkit-box-align: center;
+      -webkit-box-pack: center;
+      -webkit-box-orient: horizontal; }
+      .zmiti-main-ui .zmiti-result-page > header > div {
+        -webkit-box-flex: 1; }
+        .zmiti-main-ui .zmiti-result-page > header > div:nth-of-type(2) {
+          text-align: center;
+          color: #fff; }
+      .zmiti-main-ui .zmiti-result-page > header img {
+        height: 20px;
+        position: relative;
+        left: .5rem;
+        width: auto; }
+    .zmiti-main-ui .zmiti-result-page > section {
+      position: absolute;
+      overflow: hidden;
+      width: 100%;
+      bottom: 0;
+      box-sizing: border-box; }
+      .zmiti-main-ui .zmiti-result-page > section:after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 40%;
+        background: #f5f5f5;
+        bottom: 0;
+        left: 0;
+        z-index: -1; }
+      .zmiti-main-ui .zmiti-result-page > section > div {
+        padding-bottom: 40px; }
+      .zmiti-main-ui .zmiti-result-page > section > div > article {
+        width: 9rem;
+        margin: .1rem auto;
+        color: #fff;
+        font-size: .8rem; }
+        .zmiti-main-ui .zmiti-result-page > section > div > article span {
+          font-size: .4rem;
+          margin-left: .4rem; }
+      .zmiti-main-ui .zmiti-result-page > section .zmiti-result-date {
+        width: 8rem;
+        margin: .4rem auto;
+        display: -webkit-box;
+        -webkit-box-align: center;
+        -webkit-box-pack: center;
+        -webkit-box-orient: horizontal; }
+        .zmiti-main-ui .zmiti-result-page > section .zmiti-result-date > aside {
+          -webkit-box-flex: 1;
+          text-align: center;
+          color: #fff;
+          font-size: .5rem; }
+          .zmiti-main-ui .zmiti-result-page > section .zmiti-result-date > aside:nth-of-type(2) {
+            height: 1px;
+            background: #fff; }
+      .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard {
+        width: 100%;
+        background: #f5f5f5;
+        font-size: .4rem; }
+        .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard h2 {
+          font-weight: normal;
+          margin: 0 auto .4rem;
+          padding-top: .4rem; }
+        .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard > div {
+          width: 9rem;
+          margin: 0 auto; }
+        .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-result-train {
+          position: relative; }
+          .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-result-train span {
+            position: absolute;
+            z-index: 10;
+            color: #fff;
+            font-size: .5rem;
+            right: 0;
+            width: 7rem;
+            height: 100%;
+            line-height: 2rem;
+            text-align: center; }
+        .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-result-travels {
+          margin: .1rem auto 0;
+          display: -webkit-box;
+          -webkit-box-align: center;
+          -webkit-box-pack: center;
+          -webkit-box-orient: horizontal; }
+          .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-result-travels > aside {
+            -webkit-box-flex: 1;
+            position: relative; }
+            .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-result-travels > aside:nth-of-type(2) {
+              margin-left: .2rem; }
+            .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-result-travels > aside span {
+              position: absolute;
+              z-index: 10;
+              color: #fff;
+              font-size: .5rem;
+              right: 0;
+              width: 2.6rem;
+              height: 100%;
+              line-height: 2rem;
+              text-align: center; }
+        .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-stay {
+          background: #fff;
+          height: 2rem;
+          text-align: center;
+          line-height: 2rem;
+          display: -webkit-box;
+          -webkit-box-align: center;
+          -webkit-box-pack: center;
+          -webkit-box-orient: horizontal; }
+          .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-stay span {
+            font-size: 1rem;
+            color: #ff672b; }
+          .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-stay > aside {
+            text-align: center;
+            -webkit-box-flex: 1; }
+            .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-stay > aside span {
+              font-size: .8rem; }
+            .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-stay > aside:nth-of-type(2) {
+              height: 100%;
+              position: relative; }
+              .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-stay > aside:nth-of-type(2):before {
+                content: '';
+                width: 1px;
+                position: absolute;
+                top: 15%;
+                height: 70%;
+                left: .1rem;
+                background: #999; }
+        .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-food-travel {
+          display: -webkit-box;
+          -webkit-box-align: center;
+          -webkit-box-pack: center;
+          -webkit-box-orient: horizontal; }
+          .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-food-travel > aside {
+            box-sizing: border-box;
+            width: 4.5rem; }
+            .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-food-travel > aside:nth-of-type(1) {
+              position: relative; }
+              .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-food-travel > aside:nth-of-type(1):after {
+                content: "";
+                width: 1px;
+                height: 90%;
+                background: #999;
+                position: absolute;
+                right: .2rem;
+                -webkit-transform: scale(0.7, 1);
+                transform: scale(0.7, 1);
+                top: 5%; }
+            .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-food-travel > aside > div {
+              margin-top: -.4rem; }
+            .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-food-travel > aside span {
+              font-size: .66rem;
+              color: #00c6ff; }
+            .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-food-travel > aside label {
+              color: #999; }
+        .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-result-remark {
+          color: #ff672b;
+          margin-top: .4rem; }
+        .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-result-invoice {
+          background: #fff;
+          line-height: .8rem;
+          border-radius: 0.2rem;
+          padding: .4rem; }
+          .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-result-invoice label {
+            color: #ff672b; }
+        .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-notice {
+          margin: 20px 0;
+          text-align: right; }
+          .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-notice span {
+            margin-right: .4rem;
+            color: #007aff;
+            text-decoration: underline; }
+  .zmiti-main-ui .zmiti-notice-page {
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    background: #fff;
+    z-index: 5221; }
+    .zmiti-main-ui .zmiti-notice-page.right {
+      -webkit-transform: translate3d(10rem, 0, 0) scale(0.8);
+      transform: translate3d(10rem, 0, 0) scale(0.8); }
+    .zmiti-main-ui .zmiti-notice-page.active {
+      -webkit-transform: translate3d(0, 0, 0) scale(1);
+      transform: translate3d(0, 0, 0) scale(1); }
+    .zmiti-main-ui .zmiti-notice-page .zmiti-notice-wrap {
+      overflow: hidden;
+      position: relative;
+      top: 55px; }
+      .zmiti-main-ui .zmiti-notice-page .zmiti-notice-wrap > div {
+        padding-bottom: 40px;
+        width: 9.6rem;
+        margin: 0 auto; }
+    .zmiti-main-ui .zmiti-notice-page > header {
+      height: 44px;
+      padding-top: 10px;
+      top: 0;
+      position: absolute;
+      width: 100%;
+      left: 0;
+      background: #00c5ff;
+      display: -webkit-box;
+      -webkit-box-align: center;
+      -webkit-box-pack: center;
+      -webkit-box-orient: horizontal; }
+      .zmiti-main-ui .zmiti-notice-page > header > div {
+        -webkit-box-flex: 1; }
+        .zmiti-main-ui .zmiti-notice-page > header > div:nth-of-type(2) {
+          text-align: center;
+          color: #fff; }
+      .zmiti-main-ui .zmiti-notice-page > header img {
+        height: 20px;
+        position: relative;
+        left: .5rem;
+        width: auto; }
 
 /*# sourceMappingURL=index.css.map */
