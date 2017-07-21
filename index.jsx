@@ -247,11 +247,11 @@ var obserable = new Obserable();
 					 				<section className='zmiti-food-travel'>
 					 					<aside>
 					 						<h2>伙食补助费</h2>
-					 						<div><span>{this.state.food}</span>元 <label>({this.state.food}元/天)</label></div>
+					 						<div><span>{this.state.food*this.state.day}</span>元 <label>({this.state.food}元/天)</label></div>
 					 					</aside>
 					 					<aside>
 					 						<h2>交通费</h2>
-					 						<div><span>{this.state.traffic}</span>元 <label>({this.state.traffic}元/天)</label></div>
+					 						<div><span>{this.state.traffic*this.state.day}</span>元 <label>({this.state.traffic}元/天)</label></div>
 					 					</aside>
 					 				</section>
 					 				<section className='zmiti-result-remark'>
@@ -709,7 +709,7 @@ var obserable = new Obserable();
 			if(data.getret === 0 ){
 				this.state.indexClass = 'left';
 				this.state.resultClass = 'active';
-
+				//console.log(data.result);
 				this.setState(data.result,()=>{
 					this.resultScroll.refresh();
 				});
