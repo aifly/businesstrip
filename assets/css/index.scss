@@ -36,7 +36,8 @@ input, textarea {
 
 }
 .zmiti-main-ui{
-  
+  width:10rem;
+  overflow: hidden;
   .weui-picker__bd{
     //height: 170px;
   }
@@ -236,10 +237,10 @@ input, textarea {
          .weui-picker__mask{
             &:after{
               top: 50%;
-              margin-top: -.35rem;
+              margin-top: -10px;
               content:'年';
               color:#007aff;
-              right:.32rem;
+              right:.40rem;
               @include pos(a);
             }
             

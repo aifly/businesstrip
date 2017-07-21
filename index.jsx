@@ -103,7 +103,8 @@ var obserable = new Obserable();
 	        enddate:'',
 	        indexClass:'active',
 	        resultClass:'right',
-	        noticeClass:'right'
+	        noticeClass:'right',
+	        showCover:window.showCover
 			
 		}
 		this.viewW = document.documentElement.clientWidth;
@@ -113,8 +114,9 @@ var obserable = new Obserable();
 	render() {
 		return (
 			<div className='zmiti-main-ui' >
-				 <section className={'zmiti-index-page '+this.state.indexClass}>
-					<header>出差宝</header>
+				{this.state.showCover && <div className='zmiti-cover lt-full' style={{zIndex:1200,background:'url(./assets/images/launch.png) no-repeat center / cover'}}></div>}
+				 <section  style={{opacity:this.state.showCover?0:1}} className={'zmiti-index-page '+this.state.indexClass}>
+					<header>{document.title}</header>
 					<section className='zmiti-index-scroll-wrap' style={{height:this.viewH - 54}} ref='zmiti-index-scroll-wrap'>
 						<div>
 							<img src={this.state.logoImg}/>
@@ -588,6 +590,12 @@ var obserable = new Obserable();
 	 
 		this.state.dateGroup[2].items.length = 0;
 
+
+		setTimeout(()=>{
+			this.setState({
+				showCover:false
+			});
+		},2000)
 
 		var D = new Date();
 
