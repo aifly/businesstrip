@@ -213,7 +213,21 @@ input, textarea {
     }
 
   }
-
+  
+  
+  .zmiti-busyday-title{
+    
+  }
+  .zmiti-busyday{
+    
+    text-align: center;
+    color:#ff672b;
+    @include pos(r);
+    margin-top: -1.1rem;
+   // top: -1.2rem;
+    
+    
+  }
 
 
 
@@ -356,7 +370,7 @@ input, textarea {
           h2{
             font-weight: normal;
             margin: 0 auto .4rem;
-            
+            font-size: .5rem;
             padding-top: .4rem;
           }
           &>div{
@@ -445,14 +459,14 @@ input, textarea {
                   &:after{
                     content:"";
                     width: 1px;
-                    height: 90%;
+                    height: 80%;
                     background: #999;
                     @include pos(a);
                     right: .2rem;
 
                     @include transform(scale(.7,1));
 
-                    top: 5%;
+                    top: 17%;
                   }
                    
                 }

@@ -92,6 +92,7 @@ var obserable = new Obserable();
 	        		]
 	        	}
 	        ],
+	        busyDayArray:[],
 	        jobGroup:[
 	        {
 	        	items:[
@@ -243,6 +244,15 @@ var obserable = new Obserable();
 					 					<aside></aside>
 					 					<aside>旺季：<span>{this.state.busyLive}</span>元/天</aside>
 					 				</section>}
+
+					 				{this.state.busyDayArray.length>0&&<h2 className='zmiti-busyday-title'>旺季日期：</h2>}
+					 				{this.state.busyDayArray.length>0&&<section className='zmiti-busyday'>
+					 									 					{this.state.busyDayArray.map((item,o)=>{
+					 									 						return <div key={o}>
+					 									 							{item}
+					 									 						</div>
+					 									 					})}
+					 									 				</section>}
 					 				
 					 				<section className='zmiti-food-travel'>
 					 					<aside>
@@ -709,7 +719,8 @@ var obserable = new Obserable();
 			if(data.getret === 0 ){
 				this.state.indexClass = 'left';
 				this.state.resultClass = 'active';
-				//console.log(data.result);
+				
+				//data.result.busyDayArray =  ['07月01日-09月30日','11月01日-12月31日','11月01日-12月31日','11月01日-12月31日'];
 				this.setState(data.result,()=>{
 					this.resultScroll.refresh();
 				});
