@@ -190,7 +190,7 @@ var obserable = new Obserable();
 					
 				 </section>
 				<section className={'zmiti-result-page lt-full '+ this.state.resultClass}>
-					 <div style={{background:'#fff url(./assets/images/backImage.png) no-repeat center top / cover'}}></div>
+					 <div style={{background:'url(./assets/images/backImage.png) no-repeat center top'}}></div>
 					 <header>
 					 	<div onTouchTap={()=>{this.setState({indexClass:'active',resultClass:'right'})}}><img src='./assets/images/back@2x.png'/></div>
 					 	<div>{this.state.currentJobName + "人员出差标准"}</div>

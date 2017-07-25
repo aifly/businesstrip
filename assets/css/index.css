@@ -339,7 +339,7 @@ input, textarea {
             text-align: center;
             -webkit-box-flex: 1; }
             .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-stay > aside span {
-              font-size: .8rem; }
+              font-size: 0.8rem; }
             .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-stay > aside:nth-of-type(2) {
               height: 100%;
               position: relative; }
