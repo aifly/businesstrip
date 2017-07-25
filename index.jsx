@@ -115,7 +115,7 @@ var obserable = new Obserable();
 	render() {
 		return (
 			<div className='zmiti-main-ui' >
-				{this.state.showCover && <div className='zmiti-cover lt-full' style={{zIndex:1200,background:'url(./assets/images/launch.png) no-repeat center / cover'}}></div>}
+				{this.state.showCover && <div className='zmiti-cover lt-full' style={{zIndex:1200,background:'url(./assets/images/640.png) no-repeat center',backgroundSize:'cover'}}></div>}
 				 <section  style={{opacity:this.state.showCover?0:1}} className={'zmiti-index-page '+this.state.indexClass}>
 					<header>{document.title}</header>
 					<section className='zmiti-index-scroll-wrap' style={{height:this.viewH - 54}} ref='zmiti-index-scroll-wrap'>
