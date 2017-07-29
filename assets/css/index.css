@@ -65,8 +65,6 @@ input, textarea {
     box-sizing: border-box; }
   .zmiti-main-ui .weui-picker__indicator {
     box-sizing: border-box; }
-  .zmiti-main-ui .zmiti-cover {
-    z-index: 10000; }
   .zmiti-main-ui .zmiti-index-page {
     -webkit-transition: 0.4s;
     transition: 0.4s;

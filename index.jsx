@@ -11,6 +11,9 @@ import 'weui';
 import 'react-weui/build/packages/react-weui.css';
 import Obserable from './components/public/obserable';
 
+
+import ZmitiToastApp from './components/toast/index.jsx'
+
 var obserable = new Obserable();
 
  class App extends Component {
@@ -98,6 +101,7 @@ var obserable = new Obserable();
 	        	items:[
 	        	]
 	        }],
+	        toast:'',
 	        currentReasonName:'',
 	        currentReasonId:'',
 	        startdate:'',
@@ -115,7 +119,7 @@ var obserable = new Obserable();
 	render() {
 		return (
 			<div className='zmiti-main-ui' >
-				{this.state.showCover && <div className='zmiti-cover lt-full' style={{zIndex:1200,background:'url(./assets/images/640.png) no-repeat center',backgroundSize:'cover'}}></div>}
+				 {this.state.toast && <ZmitiToastApp toast={this.state.toast}></ZmitiToastApp>}
 				 <section  style={{opacity:this.state.showCover?0:1}} className={'zmiti-index-page '+this.state.indexClass}>
 					<header>{document.title}</header>
 					<section className='zmiti-index-scroll-wrap' style={{height:this.viewH - 54}} ref='zmiti-index-scroll-wrap'>
@@ -128,10 +132,10 @@ var obserable = new Obserable();
 										<aside>
 											  {this.state.currentCountry||'中国'}
 										</aside>
-										<aside  onTouchTap={(e)=>{ e.preventDefault();this.setState({showProvincePicker:true})}}>
+										<aside  onTouchStart={(e)=>{ e.preventDefault();this.setState({showProvincePicker:true})}}>
 											{this.state.currentProvinceName}
 										</aside>
-										<aside  onTouchTap={(e)=>{ e.preventDefault();this.setState({showCityPicker:true})}}>
+										<aside  onTouchStart={(e)=>{ e.preventDefault();this.setState({showCityPicker:true})}}>
 											{this.state.currentCityName}
 										</aside>
 									</section>
@@ -142,12 +146,12 @@ var obserable = new Obserable();
 								<div>
 									<section className='zmiti-trip-destination'>出差时间</section>
 									<section className='zmiti-trip-date'>
-										<aside onTouchTap={this.selectedDate.bind(this,'startdate')}>
+										<aside onTouchStart={this.selectedDate.bind(this,'startdate')}>
 											  {this.state.startdate}
 											  <img src='./assets/images/date.png'/>
 										</aside>
 										<aside></aside>
-										<aside onTouchTap={this.selectedDate.bind(this,'enddate')}>
+										<aside onTouchStart={this.selectedDate.bind(this,'enddate')}>
 											{this.state.enddate}
 											<img src='./assets/images/date.png'/>
 										</aside>
@@ -545,6 +549,18 @@ var obserable = new Obserable();
 
 	}
 
+	showToast(msg){
+		this.setState({
+        	toast:msg
+        });
+
+        setTimeout(()=>{
+			this.setState({
+	       		toast:''
+	        });	        	
+        },2000)
+	}
+
 	getDaysInOneMonth (year, month) {
 
 		month = parseInt(month,10);
@@ -605,6 +621,7 @@ var obserable = new Obserable();
 			this.setState({
 				showCover:false
 			});
+			$('#zmiti-cover').remove();
 		},2000)
 
 		var D = new Date();
@@ -619,15 +636,21 @@ var obserable = new Obserable();
 
 		this['startdate1'] =this['enddate1'] = this.format(D);
 
-
-
-
-
 		var date = D;
 		var year = date.getFullYear();
 		var month = date.getMonth()+1;
 		this.fixDay(year,month);
 	}
+
+	compareDate(checkStartDate, checkEndDate) {      
+		var arys1= new Array();      
+		var arys2= new Array();      
+		arys1=checkStartDate.split('-');      
+	    var sdate=new Date(arys1[0],parseInt(arys1[1]-1),arys1[2]);      
+	 	arys2=checkEndDate.split('-');      
+	 	var edate=new Date(arys2[0],parseInt(arys2[1]-1),arys2[2]);      
+	 	return sdate <= edate;
+	}  
 
 	request(){
 		$.ajax({
@@ -696,6 +719,11 @@ var obserable = new Obserable();
 	}
 
 	beginSearch(){
+
+		if(!this.compareDate(this.state.startdate,this.state.enddate)){
+			this.showToast('开始日期不能大于结束日期');
+			return;
+		}
 
 
 		$.ajax({	
