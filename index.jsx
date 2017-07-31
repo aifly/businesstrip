@@ -260,11 +260,11 @@ var obserable = new Obserable();
 					 				
 					 				<section className='zmiti-food-travel'>
 					 					<aside>
-					 						<h2>伙食补助费</h2>
+					 						<h2>伙食补助</h2>
 					 						<div><span>{this.state.food*this.state.day}</span>元 <label>({this.state.food}元/天)</label></div>
 					 					</aside>
 					 					<aside>
-					 						<h2>交通费</h2>
+					 						<h2>交通补助</h2>
 					 						<div><span>{this.state.traffic*this.state.day}</span>元 <label>({this.state.traffic}元/天)</label></div>
 					 					</aside>
 					 				</section>
