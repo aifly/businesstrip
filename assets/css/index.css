@@ -68,15 +68,17 @@ input, textarea {
   .zmiti-main-ui .zmiti-index-page {
     -webkit-transition: 0.4s;
     transition: 0.4s;
+    left: 0;
+    top: 0;
     width: 100%;
-    position: relative;
+    position: absolute;
     z-index: 10; }
     .zmiti-main-ui .zmiti-index-page.active {
       -webkit-transform: translate3d(0, 0, 0) scale(1);
       transform: translate3d(0, 0, 0) scale(1); }
     .zmiti-main-ui .zmiti-index-page.left {
-      -webkit-transform: translate3d(-5rem, 0, 0) scale(1);
-      transform: translate3d(-5rem, 0, 0) scale(1); }
+      -webkit-transform: translate3d(-50%, 0, 0) scale(1);
+      transform: translate3d(-50%, 0, 0) scale(1); }
     .zmiti-main-ui .zmiti-index-page > header {
       width: 100%;
       height: 44px;
@@ -203,8 +205,8 @@ input, textarea {
     transition: 0.4s;
     z-index: 5220; }
     .zmiti-main-ui .zmiti-result-page.right {
-      -webkit-transform: translate3d(10rem, 0, 0) scale(0.8);
-      transform: translate3d(10rem, 0, 0) scale(0.8); }
+      -webkit-transform: translate3d(100%, 0, 0) scale(0.8);
+      transform: translate3d(100%, 0, 0) scale(0.8); }
     .zmiti-main-ui .zmiti-result-page.active {
       -webkit-transform: translate3d(0, 0, 0) scale(1);
       transform: translate3d(0, 0, 0) scale(1); }
@@ -401,8 +403,8 @@ input, textarea {
     background: #fff;
     z-index: 5221; }
     .zmiti-main-ui .zmiti-notice-page.right {
-      -webkit-transform: translate3d(10rem, 0, 0) scale(0.8);
-      transform: translate3d(10rem, 0, 0) scale(0.8); }
+      -webkit-transform: translate3d(100%, 0, 0) scale(0.8);
+      transform: translate3d(100%, 0, 0) scale(0.8); }
     .zmiti-main-ui .zmiti-notice-page.active {
       -webkit-transform: translate3d(0, 0, 0) scale(1);
       transform: translate3d(0, 0, 0) scale(1); }

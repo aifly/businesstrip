@@ -60,15 +60,17 @@ input, textarea {
 
   .zmiti-index-page {
     @include transition(.4s);
+    left: 0;
+    top: 0;
 
     &.active {
       @include transform(translate3d(0, 0, 0) scale(1));
     }
     &.left {
-      @include transform(translate3d(-5rem, 0, 0) scale(1));
+      @include transform(translate3d(-50%, 0, 0) scale(1));
     }
     width: 100%;
-    @include pos(r);
+    @include pos(a);
     z-index: 10;
 
     &>header {
@@ -245,7 +247,7 @@ input, textarea {
     @include transition(.4s);
 
     &.right {
-      @include transform(translate3d(10rem, 0, 0) scale(.8));
+      @include transform(translate3d(100%, 0, 0) scale(.8));
     }
     &.active {
       @include transform(translate3d(0, 0, 0) scale(1));
@@ -489,7 +491,7 @@ input, textarea {
     @include transition(.4s);
 
     &.right {
-      @include transform(translate3d(10rem, 0, 0) scale(.8));
+      @include transform(translate3d(100%, 0, 0) scale(.8));
     }
     &.active {
       @include transform(translate3d(0, 0, 0) scale(1));
