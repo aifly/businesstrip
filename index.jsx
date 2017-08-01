@@ -150,7 +150,7 @@ var obserable = new Obserable();
 											  {this.state.startdate}
 											  <img src='./assets/images/date.png'/>
 										</aside>
-										<aside></aside>
+										<aside><span style={{opacity:0}}>{this.state.enddate}</span></aside>
 										<aside onTouchStart={this.selectedDate.bind(this,'enddate')}>
 											{this.state.enddate}
 											<img src='./assets/images/date.png'/>
@@ -164,7 +164,7 @@ var obserable = new Obserable();
 							<section className='zmiti-trip'>
 								<div>
 									<section className='zmiti-trip-destination'>出差事由</section>
-									<section className='zmiti-trip-city-C'>
+									<section className='zmiti-trip-city-C zmiti-trip-reason'>
 										<aside style={{width:0,'WebkitBoxFlex':0,opacity:0}}></aside>
 										<aside style={{textAlign:'left'}} onTouchTap={(e)=>{ e.preventDefault();this.setState({showReasonPicker:true})}}>
 											{this.state.currentReasonName}
@@ -176,7 +176,7 @@ var obserable = new Obserable();
 							<section className='zmiti-trip'>
 								<div>
 									<section className='zmiti-trip-destination'>职务级别</section>
-									<section className='zmiti-trip-city-C'>
+									<section className='zmiti-trip-city-C zmiti-trip-reason'>
 										<aside style={{width:0,'WebkitBoxFlex':0,opacity:0}}></aside>
 										<aside style={{textAlign:'left'}} onTouchTap={(e)=>{ e.preventDefault();this.setState({showJobPicker:true})}}>
 											{this.state.currentJobName}

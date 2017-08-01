@@ -149,16 +149,8 @@ input, textarea {
               @include pos(a);
             }
             @include pos(r);
+            width: 3rem;
 
-            &:nth-of-type(1) {
-              -webkit-box-flex: 2;
-            }
-            &:nth-of-type(2) {
-              -webkit-box-flex: 2;
-            }
-            &:nth-of-type(3) {
-              -webkit-box-flex: 2;
-            }
             &:nth-of-type(2), &:nth-of-type(3) {
               &:before {
                 content: "";
@@ -174,9 +166,17 @@ input, textarea {
             }
           }
         }
+        .zmiti-trip-reason {
+          -webkit-box-pack: start;
+
+          &>aside {
+            width: 100%;
+          }
+        }
         .zmiti-trip-date {
           &>aside {
             height: auto;
+            width: 4rem;
 
             &:nth-of-type(2) {
               -webkit-box-flex: none;
