@@ -107,7 +107,8 @@ input, textarea {
       -webkit-box-pack: center;
       -webkit-box-orient: horizontal; }
       .zmiti-main-ui .zmiti-index-page .zmiti-trip > div {
-        width: 9rem; }
+        width: 9rem;
+        overflow: hidden; }
         .zmiti-main-ui .zmiti-index-page .zmiti-trip > div .zmiti-trip-destination {
           font-size: .4rem;
           color: #000;
@@ -129,7 +130,8 @@ input, textarea {
           -webkit-box-pack: center;
           -webkit-box-orient: horizontal;
           font-size: .4rem;
-          height: 24px; }
+          height: 24px;
+          width: 100%; }
           .zmiti-main-ui .zmiti-index-page .zmiti-trip > div .zmiti-trip-city-C > aside, .zmiti-main-ui .zmiti-index-page .zmiti-trip > div .zmiti-trip-date > aside {
             height: .6rem;
             text-align: center;
@@ -305,6 +307,8 @@ input, textarea {
             line-height: 2rem;
             text-align: center; }
         .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-result-travels {
+          width: 100%;
+          overflow: hidden;
           margin: .1rem auto 0;
           display: -webkit-box;
           -webkit-box-align: center;
@@ -357,7 +361,10 @@ input, textarea {
           display: -webkit-box;
           -webkit-box-align: center;
           -webkit-box-pack: center;
-          -webkit-box-orient: horizontal; }
+          -webkit-box-orient: horizontal;
+          width: 100%;
+          overflow: hidden;
+          box-sizing: border-box; }
           .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-food-travel > aside {
             box-sizing: border-box;
             width: 4.5rem; }
