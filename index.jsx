@@ -109,7 +109,8 @@ var obserable = new Obserable();
 	        indexClass:'active',
 	        resultClass:'right',
 	        noticeClass:'right',
-	        showCover:window.showCover
+	        showCover:window.showCover,
+	        version:''
 			
 		}
 		this.viewW = document.documentElement.clientWidth;
@@ -278,6 +279,9 @@ var obserable = new Obserable();
 					 					<div>抬<span style={{opacity:0}}>税人识别</span>头：<label>中国人民银行营业管理部</label></div>
 					 					<div>纳税人识别号：<label>11100000H52630606M</label></div>
 					 				</section>
+
+					 				<h2>版本号: {this.state.version||'v1.2'}</h2>
+					 				<section></section>
 
 					 				<section className='zmiti-notice'>
 					 					<span onTouchTap={this.getNotice.bind(this)}>注意事项</span>
@@ -617,10 +621,15 @@ var obserable = new Obserable();
 		this.state.dateGroup[2].items.length = 0;
 
 
+	
 		setTimeout(()=>{
 			this.setState({
-				showCover:false
+				showCover:false,
+				version:window.JSInterface &&  window.JSInterface.getVersion()
 			});
+			
+			///alert(window.JSInterface ? window.JSInterface.getVersion() : 'error');
+
 			$('#zmiti-cover').remove();
 		},2000)
 
