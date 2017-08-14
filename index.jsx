@@ -603,23 +603,23 @@ var obserable = new Obserable();
 	}
  
 	componentDidMount() {
-		this.request();
+		
 
-		this.scroll = new IScroll(this.refs['zmiti-index-scroll-wrap'],{
+		this.scroll = new IScroll(this.refs['zmiti-index-scroll-wrap'], {
 			scrollbars:true
 		});
 
-		this.resultScroll = new IScroll(this.refs['result-page'],{
+		this.resultScroll = new IScroll(this.refs['result-page'], {
 			scrollbars:true
 		});
 
-		this.noticeScroll = new IScroll(this.refs['zmiti-notice-wrap'],{
+		this.noticeScroll = new IScroll(this.refs['zmiti-notice-wrap'], {
 			scrollbars:true
 		})
 
 	 
 		this.state.dateGroup[2].items.length = 0;
-
+		this.request();
 
 	
 		setTimeout(()=>{
