@@ -56,7 +56,7 @@ var obserable = new Obserable();
         	currentCountry:'',
         	currentProvinceName:'',
         	currentProvinceId:-1,
-        	logoImg:'./assets/images/showImage.jpg',
+        	logoImg:'./assets/images/showImage.png',
         	currentCityId:-1,
         	currnetSelectProvinceIndex:0,//当前选择的省的索引
         	currnetSelectCityIndex:0,//当前选择的市的索引
@@ -64,6 +64,7 @@ var obserable = new Obserable();
         	currentSelectJobIndex:0,
         	currentCityName:'',
         	defaultProvinceSelect:[0],
+        	isOnLine:navigator.onLine,
         	defaultCitySelect:[0],
         	currentStartdateSelectIndex:[5,new Date().getMonth(),new Date().getDate()-1],
         	currentEnddateSelectIndex:[5,new Date().getMonth(),new Date().getDate()-1],
@@ -125,7 +126,8 @@ var obserable = new Obserable();
 					<header>{document.title}</header>
 					<section className='zmiti-index-scroll-wrap' style={{height:this.viewH - 54}} ref='zmiti-index-scroll-wrap'>
 						<div>
-							<img src={this.state.logoImg}/>
+							{!this.state.isOnLine&&<div className='zmiti-offline'><span>!</span>网络不给力,请检查您的网络设置。</div>}
+							<div style={{height:'5rem'}}><img src={this.state.logoImg}/></div>
 							<section className='zmiti-trip'>
 								<div>
 									<section className='zmiti-trip-destination'>出差目的地</section>
@@ -203,6 +205,7 @@ var obserable = new Obserable();
 					 </header>
 					 <section ref='result-page' style={{height:this.viewH - 55}}>
 					 	<div>
+					 		{!this.state.isOnLine&&<p className='zmiti-offline'><span>!</span>网络不给力,请检查您的网络设置。</p>}
 					 		<article>
 					 			{this.state.currentCityName}<span>北京时间：{this.state.beiJingTime}</span>
 					 		</article>
@@ -280,7 +283,7 @@ var obserable = new Obserable();
 					 					<div>纳税人识别号：<label>11100000H52630606M</label></div>
 					 				</section>
 
-					 				<h2>版本号: {this.state.version||'v1.2'}</h2>
+					 				<h2 style={{fontSize:'.4rem'}}>版本号: {this.state.version||'v1.2'}</h2>
 					 				<section></section>
 
 					 				<section className='zmiti-notice'>
@@ -603,7 +606,12 @@ var obserable = new Obserable();
 	}
  
 	componentDidMount() {
+
+
+
 		
+
+	
 
 		this.scroll = new IScroll(this.refs['zmiti-index-scroll-wrap'], {
 			scrollbars:true
@@ -619,18 +627,36 @@ var obserable = new Obserable();
 
 	 
 		this.state.dateGroup[2].items.length = 0;
-		this.request();
 
+		window.addEventListener('online',()=>{
+			this.setState({
+				isOnLine:true
+			},()=>{
+				this.request();
+			});
+
+		});
+
+		window.addEventListener('offline',()=>{
+			this.setState({
+				isOnLine:false
+			})
+		});
 	
 		setTimeout(()=>{
 			this.setState({
 				showCover:false,
+				isOnLine:navigator.onLine,
 				version:window.JSInterface &&  window.JSInterface.getVersion()
 			});
+
 			
 			///alert(window.JSInterface ? window.JSInterface.getVersion() : 'error');
 
 			$('#zmiti-cover').remove();
+			if(navigator.onLine){
+				this.request();
+			}
 		},2000)
 
 		var D = new Date();
@@ -667,6 +693,9 @@ var obserable = new Obserable();
 			url:window.baseUrl + 'travel/get_basedata',
 			data:{
 				companyid:window.companyid
+			},
+			error(){
+				this.showToast('数据请求失败,请刷新重试');
 			}
 		}).done((data)=>{
 			if(typeof data === 'string'){
@@ -713,7 +742,7 @@ var obserable = new Obserable();
 					})
 				});
 
-				this.state.logoImg = data.result.logoImage;
+				//this.state.logoImg = data.result.logoImage;
 
 			
 				
@@ -723,7 +752,12 @@ var obserable = new Obserable();
 					},100)
 				});
 
+			}else{
+				this.showToast('数据请求失败,请刷新重试');
 			}
+		},()=>{
+
+			
 		});
 	}
 
