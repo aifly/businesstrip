@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React, {
+	Component
+} from 'react';
 import ReactDOM from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import $ from 'jquery';
@@ -16,7 +18,7 @@ import ZmitiToastApp from './components/toast/index.jsx'
 
 var obserable = new Obserable();
 
- class App extends Component {
+class App extends Component {
 	constructor(props) {
 		super(props);
 
@@ -25,100 +27,97 @@ var obserable = new Obserable();
 			date = [];
 
 
-		var cYear = new Date().getFullYear()-5;
+		var cYear = new Date().getFullYear() - 5;
 
-		for(var i =0;i<105;i++){
-			if (i<31){
+		for (var i = 0; i < 105; i++) {
+			if (i < 31) {
 				date.push({
-					label:i+1<10?'0'+(i+1):i+1,
-					value:'2-'+(i+1<10?'0'+(i+1):i+1)
+					label: i + 1 < 10 ? '0' + (i + 1) : i + 1,
+					value: '2-' + (i + 1 < 10 ? '0' + (i + 1) : i + 1)
 				})
 			}
-			if(i<12){
+			if (i < 12) {
 				month.push({
-					label:i+1<10?'0'+(i+1):i+1,
-					value:'1-'+(i+1)
+					label: i + 1 < 10 ? '0' + (i + 1) : i + 1,
+					value: '1-' + (i + 1)
 				})
 			}
 			years.push({
-				label:cYear+i,
-				value:'0-'+(cYear+i)
+				label: cYear + i,
+				value: '0-' + (cYear + i)
 			});
 		}
 
 
 
 		this.state = {
-			stateId:'',//国家id
+			stateId: '', //国家id
 			showProvincePicker: false,
-        	picker_value: '',
-        	busyLive:700,
-        	currentCountry:'',
-        	currentProvinceName:'',
-        	currentProvinceId:-1,
-        	logoImg:'./assets/images/showImage.png',
-        	currentCityId:-1,
-        	currnetSelectProvinceIndex:0,//当前选择的省的索引
-        	currnetSelectCityIndex:0,//当前选择的市的索引
-        	reasonSelectIndex:0,//出差事由索引
-        	currentSelectJobIndex:0,
-        	currentCityName:'',
-        	defaultProvinceSelect:[0],
-        	isOnLine:navigator.onLine,
-        	defaultCitySelect:[0],
-        	currentStartdateSelectIndex:[5,new Date().getMonth(),new Date().getDate()-1],
-        	currentEnddateSelectIndex:[5,new Date().getMonth(),new Date().getDate()-1],
+			picker_value: '',
+			busyLive: 700,
+			currentCountry: '',
+			currentProvinceName: '',
+			currentProvinceId: -1,
+			logoImg: './assets/images/showImage.png',
+			currentCityId: -1,
+			currnetSelectProvinceIndex: 0, //当前选择的省的索引
+			currnetSelectCityIndex: 0, //当前选择的市的索引
+			reasonSelectIndex: 0, //出差事由索引
+			currentSelectJobIndex: 0,
+			currentCityName: '',
+			defaultProvinceSelect: [0],
+			isOnLine: navigator.onLine,
+			defaultCitySelect: [0],
+			currentStartdateSelectIndex: [5, new Date().getMonth(), new Date().getDate() - 1],
+			currentEnddateSelectIndex: [5, new Date().getMonth(), new Date().getDate() - 1],
 			provinceGroup: [{
-	                items: [
-	                    
-	                ]
-	        	}
-	        ],
-	        cityGroup:[{
-	        		items:[]
-	        	}
-	        ],
-	        dateGroup:[
-	        	{
-	        		items:years
-	        	},
-	        	{
-	        		items:month
-	        	},
-	        	{
-	        		items:date
-	        	},
+				items: [
 
-	        ],
-	        reasonGroup:[
-	        	{
-	        		items:[
-	        		]
-	        	}
-	        ],
-	        busyDayArray:[],
-	        jobGroup:[
-	        {
-	        	items:[
-	        	]
-	        }],
-	        toast:'',
-	        currentReasonName:'',
-	        currentReasonId:'',
-	        startdate:'',
-	        enddate:'',
-	        indexClass:'active',
-	        resultClass:'right',
-	        noticeClass:'right',
-	        showCover:window.showCover,
-	        version:''
-			
+				]
+			}],
+			cityGroup: [{
+				items: []
+			}],
+			dateGroup: [{
+					items: years
+				}, {
+					items: month
+				}, {
+					items: date
+				},
+
+			],
+			reasonGroup: [{
+				items: []
+			}],
+			busyDayArray: [],
+			jobGroup: [{
+				items: []
+			}],
+			toast: '',
+			currentReasonName: '',
+			currentReasonId: '',
+			startdate: '',
+			enddate: '',
+			indexClass: 'active',
+			resultClass: 'right',
+			noticeClass: 'right',
+			showCover: window.showCover,
+			version: ''
+
 		}
 		this.viewW = document.documentElement.clientWidth;
 		this.viewH = document.documentElement.clientHeight;
 		window.s = this;
 	}
 	render() {
+
+		var day = this.state.day * 1 > 2 ? this.state.day - 2 : this.state.day * 1;
+		if (this.state.reasonType === 1) {
+			day = this.state.day * 1;
+		}
+
+		var day1 = this.state.day * 1 > 2 ? 2 : this.state.day * 1;
 		return (
 			<div className='zmiti-main-ui' >
 				 {this.state.toast && <ZmitiToastApp toast={this.state.toast}></ZmitiToastApp>}
@@ -264,17 +263,33 @@ var obserable = new Obserable();
 					 				
 					 				<section className='zmiti-food-travel'>
 					 					<aside>
-					 						<h2>伙食补助</h2>
-					 						<div><span>{this.state.food*this.state.day}</span>元 <label>({this.state.food}元/天)</label></div>
+					 						<h2>领取伙食补助</h2>
+					 						<div><span>{this.state.food*day1}</span>元 <label>({this.state.food}元/天)</label></div>
 					 					</aside>
 					 					<aside>
-					 						<h2>交通补助</h2>
-					 						<div><span>{this.state.traffic*this.state.day}</span>元 <label>({this.state.traffic}元/天)</label></div>
+					 						<h2>领取交通补助</h2>
+					 						<div><span>{this.state.traffic*day1}</span>元 <label>({this.state.traffic}元/天)</label></div>
 					 					</aside>
 					 				</section>
+
+					 				{this.state.reasonType === 2 
+					 					&& 
+					 					<section className='zmiti-food-travel zmiti-food-ticket'>
+											<aside>
+						 						<h2>
+						 							<div>凭票</div>
+						 							<div>报销</div>
+						 						</h2>
+						 						<div><span>{this.state.day*1<=2?0:this.state.food*day}</span><label>元 伙食费</label></div>
+						 					</aside>
+						 					<aside>
+						 						<div><span>{this.state.day*1<=2?0:this.state.traffic*day}</span><label>元 交通费</label></div>
+						 					</aside>
+						 				</section>}
+
 					 				<section className='zmiti-result-remark'>
-					 					{this.state.reasonType === 1 && <span>依据{this.state.currentReasonName}标准，您出差补助共{this.state.subsidy}元</span>}
-					 					{this.state.reasonType === 2  &&<span>依据{this.state.currentReasonName}标准,您共出差{this.state.day}天，可得补助{this.state.subsidy}元</span>}
+					 					{this.state.reasonType === 1 && <span>依据差旅费管理办法，您出差补助共{this.state.subsidy}元</span>}
+										{this.state.reasonType === 2 && <span>在公务所在地按标准据实凭票报销交通费和餐费，详见注意事项</span>}
 					 				</section>
 
 					 				<h2>发票信息</h2>
@@ -283,11 +298,9 @@ var obserable = new Obserable();
 					 					<div>纳税人识别号：<label>11100000H52630606M</label></div>
 					 				</section>
 
-					 				<h2 style={{fontSize:'.4rem'}}>版本号: {this.state.version||'v1.2'}</h2>
-					 				<section></section>
-
 					 				<section className='zmiti-notice'>
-					 					<span onTouchTap={this.getNotice.bind(this)}>注意事项</span>
+					 					<div style={{fontSize:'.4rem'}}>版本号: {this.state.version||'v1.2'}</div>
+					 					<div onTouchTap={this.getNotice.bind(this)}>注意事项</div>
 					 				</section>
 
 					 			</div>
@@ -541,181 +554,179 @@ var obserable = new Obserable();
 		);
 	}
 
-	createMarkup(){
-		 return {__html:  this.state.notice};
+	createMarkup() {
+		return {
+			__html: this.state.notice
+		};
 	}
 
-	selectedDate(type,e){
+	selectedDate(type, e) {
 		e.preventDefault();
-		var val = type === 'startdate'? 'showDatePicker':'showDateEndPicker';
+		var val = type === 'startdate' ? 'showDatePicker' : 'showDateEndPicker';
 		//console.log(val,this.state.currentStartdateSelectIndex)
 		this.setState({
-			[val]:true
+			[val]: true
 		});
 		this.selectedDateType = type;
 
 	}
 
-	showToast(msg){
+	showToast(msg) {
 		this.setState({
-        	toast:msg
-        });
+			toast: msg
+		});
 
-        setTimeout(()=>{
+		setTimeout(() => {
 			this.setState({
-	       		toast:''
-	        });	        	
-        },2000)
+				toast: ''
+			});
+		}, 2000)
 	}
 
-	getDaysInOneMonth (year, month) {
+	getDaysInOneMonth(year, month) {
 
-		month = parseInt(month,10);
-		var d = new Date(year, month,0);
-	
+		month = parseInt(month, 10);
+		var d = new Date(year, month, 0);
+
 		return d.getDate();
 
 	}
 
-	fixDay(year,month){
+	fixDay(year, month) {
 
-	
-		
-		var count = this.getDaysInOneMonth(year,month);
+
+
+		var count = this.getDaysInOneMonth(year, month);
 
 		var arr = [];
-		for(var i = 0;i <count;i++){
+		for (var i = 0; i < count; i++) {
 			arr.push({
-				label:i+1<10?'0'+(i+1):i+1,
-				value:'2-'+(i+1<10?'0'+(i+1):i+1),
+				label: i + 1 < 10 ? '0' + (i + 1) : i + 1,
+				value: '2-' + (i + 1 < 10 ? '0' + (i + 1) : i + 1),
 			})
 		};
 
-		this.state.dateGroup[2].items.lenght =0;
+		this.state.dateGroup[2].items.lenght = 0;
 		this.state.dateGroup[2].items = arr;
 		this.forceUpdate();
 	}
 
 
-	format(date){
-		var month = date.getMonth()+1;
-		month < 10 && (month = '0'+month);
+	format(date) {
+		var month = date.getMonth() + 1;
+		month < 10 && (month = '0' + month);
 		var d = date.getDate();
-		d < 10 && (d = '0'+d);
-		return date.getFullYear()+"-"+month+"-"+d;
+		d < 10 && (d = '0' + d);
+		return date.getFullYear() + "-" + month + "-" + d;
 	}
- 
+
 	componentDidMount() {
 
 
 
-		
-
-	
-
 		this.scroll = new IScroll(this.refs['zmiti-index-scroll-wrap'], {
-			scrollbars:true
+			scrollbars: true
 		});
 
 		this.resultScroll = new IScroll(this.refs['result-page'], {
-			scrollbars:true
+			scrollbars: true
 		});
 
 		this.noticeScroll = new IScroll(this.refs['zmiti-notice-wrap'], {
-			scrollbars:true
+			scrollbars: true
 		})
 
-	 
+
 		this.state.dateGroup[2].items.length = 0;
 
-		window.addEventListener('online',()=>{
+		window.addEventListener('online', () => {
 			this.setState({
-				isOnLine:true
-			},()=>{
+				isOnLine: true
+			}, () => {
 				this.request();
 			});
 
 		});
 
-		window.addEventListener('offline',()=>{
+		window.addEventListener('offline', () => {
 			this.setState({
-				isOnLine:false
+				isOnLine: false
 			})
 		});
-	
-		setTimeout(()=>{
+
+		setTimeout(() => {
 			this.setState({
-				showCover:false,
-				isOnLine:navigator.onLine,
-				version:window.JSInterface &&  window.JSInterface.getVersion()
+				showCover: false,
+				isOnLine: navigator.onLine,
+				version: window.JSInterface && window.JSInterface.getVersion()
 			});
 
-			
+
 			///alert(window.JSInterface ? window.JSInterface.getVersion() : 'error');
 
 			$('#zmiti-cover').remove();
-			if(navigator.onLine){
+			if (navigator.onLine) {
 				this.request();
 			}
-		},2000)
+		}, 20)
 
 		var D = new Date();
 
-		this.state.currentStartdateSelectIndex = [5,this.format(D).split('-')[1]*1-1,this.format(D).split('-')[2]*1-1];
-		this.state.currentEnddateSelectIndex = [5,this.format(D).split('-')[1]*1-1,this.format(D).split('-')[2]*1-1];
+		this.state.currentStartdateSelectIndex = [5, this.format(D).split('-')[1] * 1 - 1, this.format(D).split('-')[2] * 1 - 1];
+		this.state.currentEnddateSelectIndex = [5, this.format(D).split('-')[1] * 1 - 1, this.format(D).split('-')[2] * 1 - 1];
 
 		this.setState({
-			startdate:this.format(D),
-			enddate:this.format(D)
+			startdate: this.format(D),
+			enddate: this.format(D)
 		});
 
-		this['startdate1'] =this['enddate1'] = this.format(D);
+		this['startdate1'] = this['enddate1'] = this.format(D);
 
 		var date = D;
 		var year = date.getFullYear();
-		var month = date.getMonth()+1;
-		this.fixDay(year,month);
+		var month = date.getMonth() + 1;
+		this.fixDay(year, month);
 	}
 
-	compareDate(checkStartDate, checkEndDate) {      
-		var arys1= new Array();      
-		var arys2= new Array();      
-		arys1=checkStartDate.split('-');      
-	    var sdate=new Date(arys1[0],parseInt(arys1[1]-1),arys1[2]);      
-	 	arys2=checkEndDate.split('-');      
-	 	var edate=new Date(arys2[0],parseInt(arys2[1]-1),arys2[2]);      
-	 	return sdate <= edate;
-	}  
+	compareDate(checkStartDate, checkEndDate) {
+		var arys1 = new Array();
+		var arys2 = new Array();
+		arys1 = checkStartDate.split('-');
+		var sdate = new Date(arys1[0], parseInt(arys1[1] - 1), arys1[2]);
+		arys2 = checkEndDate.split('-');
+		var edate = new Date(arys2[0], parseInt(arys2[1] - 1), arys2[2]);
+		return sdate <= edate;
+	}
 
-	request(){
+	request() {
 		$.ajax({
-			type:window.ajaxType,
-			url:window.baseUrl + 'travel/get_basedata',
-			data:{
-				companyid:window.companyid
+			type: window.ajaxType,
+			url: window.baseUrl + 'travel/get_basedata',
+			data: {
+				companyid: window.companyid
 			},
-			error(){
+			error() {
 				this.showToast('数据请求失败,请刷新重试');
 			}
-		}).done((data)=>{
-			if(typeof data === 'string'){
+		}).done((data) => {
+			if (typeof data === 'string') {
 				data = JSON.parse(data);
 			}
-			if(data.getret === 0){
+			if (data.getret === 0) {
 
 				this.state.currentCountry = data.result.citys[0].name;
-				
-				
-				data.result.citys[0].list.map((list,i)=>{
+
+
+				data.result.citys[0].list.map((list, i) => {
 					this.state.provinceGroup[0].items.push({
-						label:list.name,
-						value:list.provinceId
+						label: list.name,
+						value: list.provinceId
 					})
 				});
-				data.result.citys[0].list[0].cities.map((list,i)=>{
+				data.result.citys[0].list[0].cities.map((list, i) => {
 					this.state.cityGroup[0].items.push({
-						label:list.name,
-						value:list.cityId
+						label: list.name,
+						value: list.cityId
 					})
 				});
 				this.state.currentProvinceId = data.result.citys[0].list[0].provinceId;
@@ -726,106 +737,104 @@ var obserable = new Obserable();
 				this.defaultProvince = data.result.citys[0].list;
 				this.state.currentReasonId = data.result.reason[0].reasonId;
 				this.state.currentReasonName = data.result.reason[0].reasonName;
-				data.result.reason.map((item,i)=>{
+				data.result.reason.map((item, i) => {
 					this.state.reasonGroup[0].items.push({
-						label:item.reasonName,
-						value:item.reasonId
+						label: item.reasonName,
+						value: item.reasonId
 					})
 				});
 
 				this.state.currentJobId = data.result.duty[0].dutyId;
 				this.state.currentJobName = data.result.duty[0].name;
-				data.result.duty.map((item,i)=>{
+				data.result.duty.map((item, i) => {
 					this.state.jobGroup[0].items.push({
-						label:item.name,
-						value:item.dutyId
+						label: item.name,
+						value: item.dutyId
 					})
 				});
 
 				//this.state.logoImg = data.result.logoImage;
 
-			
-				
-				this.forceUpdate(()=>{
-					setTimeout(()=>{
+
+
+				this.forceUpdate(() => {
+					setTimeout(() => {
 						this.scroll.refresh();
-					},100)
+					}, 100)
 				});
 
-			}else{
+			} else {
 				this.showToast('数据请求失败,请刷新重试');
 			}
-		},()=>{
+		}, () => {
 
-			
+
 		});
 	}
 
-	beginSearch(){
+	beginSearch() {
 
-		if(!this.compareDate(this.state.startdate,this.state.enddate)){
+		if (!this.compareDate(this.state.startdate, this.state.enddate)) {
 			this.showToast('开始日期不能大于结束日期');
 			return;
 		}
 
 
-		$.ajax({	
-			type:'post',
-			url:window.baseUrl+'travel/get_travecost/',
-			data:{
+		$.ajax({
+			type: 'post',
+			url: window.baseUrl + 'travel/get_travecost/',
+			data: {
 
-				companyid:window.companyid,
-				countryid:this.state.stateId,
-				provinceid:this.state.currentProvinceId,
-				cityid:this.state.currentCityId,
-				traveltime:this.state.startdate,
-				traveltime2:this.state.enddate,
-				joblevelid:this.state.currentJobId,
-				tripcode:this.state.currentReasonId//'h7Wmv3d'//
+				companyid: window.companyid,
+				countryid: this.state.stateId,
+				provinceid: this.state.currentProvinceId,
+				cityid: this.state.currentCityId,
+				traveltime: this.state.startdate,
+				traveltime2: this.state.enddate,
+				joblevelid: this.state.currentJobId,
+				tripcode: this.state.currentReasonId //'h7Wmv3d'//
 			}
-		}).done((data)=>{
-			if(typeof data === 'string'){
+		}).done((data) => {
+			if (typeof data === 'string') {
 				data = JSON.parse(data);
 			}
-			if(data.getret === 0 ){
+			if (data.getret === 0) {
 				this.state.indexClass = 'left';
 				this.state.resultClass = 'active';
-				
+
 				//data.result.busyDayArray =  ['07月01日-09月30日','11月01日-12月31日','11月01日-12月31日','11月01日-12月31日'];
-				this.setState(data.result,()=>{
+				this.setState(data.result, () => {
 					this.resultScroll.refresh();
 				});
 			}
 		});
 	}
 
-	getNotice(){
+	getNotice() {
 		$.ajax({
-			type:'post',
-			url:window.baseUrl+'travel/get_notice/',
-			data:{
-				companyid:window.companyid
+			type: 'post',
+			url: window.baseUrl + 'travel/get_notice/',
+			data: {
+				companyid: window.companyid
 			}
-		}).done((data)=>{
-			if(typeof data === 'string'){
+		}).done((data) => {
+			if (typeof data === 'string') {
 				data = JSON.parse(data);
 			}
-			if(data.getret === 0){
+			if (data.getret === 0) {
 				this.setState({
-					resultClass:'left',
-					noticeClass:'active',
-					notice:data.notice
-				},()=>{
+					resultClass: 'left',
+					noticeClass: 'active',
+					notice: data.notice
+				}, () => {
 					this.noticeScroll.refresh();
 				})
 			}
 		})
 	}
-	
-	 
+
+
 }
 
 
-ReactDOM.render(<App></App>,document.getElementById('fly-main-ui'));
-	
-
+ReactDOM.render(<App></App>, document.getElementById('fly-main-ui'));
