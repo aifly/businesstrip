@@ -12,6 +12,7 @@ li {
 }
 html, body {
   height: 100%;
+  -webkit-tap-highlight-color: transparent;
 }
 body {
   font-family: "Helvetica Neue", 'Helvetica', "Microsoft YaHei", '微软雅黑', arial, sans-serif;
@@ -23,6 +24,9 @@ img {
   vertical-align: middle;
   width: 100%;
   height: auto;
+}
+.clearfix {
+  clear: both;
 }
 input, textarea {
   outline: none;
@@ -37,6 +41,18 @@ input, textarea {
   top: 0;
   overflow: hidden;
 
+  .weui-picker__indicator {
+    //background: #00f;
+  }
+  .weui-picker__indicator:before {
+    top: 0;
+  }
+  .weui-picker__indicator:after {
+    top: 34px;
+    height: 1px;
+    background: #e5e5e5;
+    border-bottom-color: none;
+  }
   .weui-picker__bd {
     //height: 170px;
   }
@@ -150,12 +166,13 @@ input, textarea {
         }
         .zmiti-trip-city-C, .zmiti-trip-date {
           color: #666;
-          @include displayBox(horizontal);
+          //@include displayBox(horizontal);
           font-size: .4rem;
           height: 28px;
           width: 100%;
 
           &>aside {
+            float: left;
             height: .6rem;
             text-align: center;
             box-sizing: border-box;
@@ -201,10 +218,17 @@ input, textarea {
             width: 4rem;
 
             &:nth-of-type(2) {
-              -webkit-box-flex: none;
               width: 1rem;
-              background: #999;
               height: 1px;
+
+              label {
+                @include pos(a);
+                left: 0;
+                top: 10px;
+                width: 100%;
+                height: 1px;
+                background: #999;
+              }
             }
             img {
               vertical-align: bottom;

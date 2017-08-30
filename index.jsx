@@ -7,7 +7,8 @@ import $ from 'jquery';
 injectTapEventPlugin();
 import IScroll from 'iscroll';
 import './assets/css/index.css';
-
+import initReactFastclick from 'react-fastclick';
+initReactFastclick();
 import Picker from 'react-weui/build/packages/components/picker/picker';
 import 'weui';
 import 'react-weui/build/packages/react-weui.css';
@@ -134,26 +135,28 @@ class App extends Component {
 										<aside>
 											  {this.state.currentCountry||'中国'}
 										</aside>
-										<aside  onTouchStart={(e)=>{ e.preventDefault();this.setState({showProvincePicker:true})}}>
+										<aside  onClick={this.toggleProvincePicker.bind(this,true)}>
 											{this.state.currentProvinceName}
 										</aside>
-										<aside  onTouchStart={(e)=>{ e.preventDefault();this.setState({showCityPicker:true})}}>
+										<aside onClick={this.toggleCityPicker.bind(this,true)}>
 											{this.state.currentCityName}
 										</aside>
+										<div className='clearfix'></div>
 									</section>
 								</div>
 							</section>
+
 
 							<section className='zmiti-trip'>
 								<div>
 									<section className='zmiti-trip-destination'>出差时间</section>
 									<section className='zmiti-trip-date'>
-										<aside onTouchStart={this.selectedDate.bind(this,'startdate')}>
+										<aside onClick={this.selectedDate.bind(this,'startdate')}>
 											  {this.state.startdate}
 											  <img src='./assets/images/date.png'/>
 										</aside>
-										<aside><span style={{opacity:0}}>{this.state.enddate}</span></aside>
-										<aside onTouchStart={this.selectedDate.bind(this,'enddate')}>
+										<aside><label></label><span style={{opacity:0}}>{this.state.enddate}</span></aside>
+										<aside onClick={this.selectedDate.bind(this,'enddate')}>
 											{this.state.enddate}
 											<img src='./assets/images/date.png'/>
 										</aside>
@@ -168,7 +171,7 @@ class App extends Component {
 									<section className='zmiti-trip-destination'>出差事由</section>
 									<section className='zmiti-trip-city-C zmiti-trip-reason'>
 										<aside style={{width:0,'WebkitBoxFlex':0,opacity:0}}></aside>
-										<aside style={{textAlign:'left'}} onTouchTap={(e)=>{ e.preventDefault();this.setState({showReasonPicker:true})}}>
+										<aside style={{textAlign:'left'}} onClick={this.toggleReasonPicker.bind(this,true)}>
 											{this.state.currentReasonName}
 										</aside>
 									</section>
@@ -180,15 +183,14 @@ class App extends Component {
 									<section className='zmiti-trip-destination'>职务级别</section>
 									<section className='zmiti-trip-city-C zmiti-trip-reason'>
 										<aside style={{width:0,'WebkitBoxFlex':0,opacity:0}}></aside>
-										<aside style={{textAlign:'left'}} onTouchTap={(e)=>{ e.preventDefault();this.setState({showJobPicker:true})}}>
+										<aside style={{textAlign:'left'}} onClick={this.toggleJobPicker.bind(this,true)}>
 											{this.state.currentJobName}
 										</aside>
 									</section>
 								</div>
 							</section>
 
-
-							<section onTouchTap={this.beginSearch.bind(this)} className='zmiti-index-ok'>
+							<section onClick={this.beginSearch.bind(this)} className='zmiti-index-ok'>
 								确定
 							</section>
 						</div>
@@ -198,7 +200,7 @@ class App extends Component {
 				<section className={'zmiti-result-page lt-full '+ this.state.resultClass}>
 					 <div style={{background:'url(./assets/images/backImage.png) no-repeat center top'}}></div>
 					 <header>
-					 	<div onTouchTap={()=>{this.setState({indexClass:'active',resultClass:'right'})}}><img src='./assets/images/back@2x.png'/></div>
+					 	<div onClick={()=>{this.setState({indexClass:'active',resultClass:'right'})}}><img src='./assets/images/back@2x.png'/></div>
 					 	<div>{this.state.currentJobName + "人员出差标准"}</div>
 					 	<div></div>
 					 </header>
@@ -300,7 +302,7 @@ class App extends Component {
 
 					 				<section className='zmiti-notice'>
 					 					<div style={{fontSize:'.4rem'}}>版本号: {this.state.version||'v1.2'}</div>
-					 					<div onTouchTap={this.getNotice.bind(this)}>注意事项</div>
+					 					<div onClick={this.getNotice.bind(this)}>注意事项</div>
 					 				</section>
 
 					 			</div>
@@ -311,7 +313,7 @@ class App extends Component {
 
 				<section className={'zmiti-notice-page lt-full '+this.state.noticeClass}>
 					 <header>
-					 	<div  onTouchTap={()=>{this.setState({noticeClass:'right',resultClass:'active'})}}><img src='./assets/images/back@2x.png'/></div>
+					 	<div  onClick={()=>{this.setState({noticeClass:'right',resultClass:'active'})}}><img src='./assets/images/back@2x.png'/></div>
 					 	<div>注意事项</div>
 					 	<div></div>
 					 </header>
@@ -327,20 +329,30 @@ class App extends Component {
 				   	                        	currentCityId = -1,
 				   	                        	currentCityName = '';
 				   							var index = -1;
+
+
+				   					
+
+				   							
 				   	                        selected.forEach( (s, i)=> {
-				   	                            value = this.state.provinceGroup[i]['items'][s].value;
-				   	                            label = this.state.provinceGroup[i]['items'][s].label;
-				   	                        	currentCityId = this.defaultProvince[s].cities[0].cityId;
-				   	                        	index = s;
-				   	                        	currentCityName = this.defaultProvince[s].cities[0].name;
-				   	                        	this.state.cityGroup[0].items.length = 0;
-				   	                        	this.defaultProvince[s].cities.map((list,i)=>{
-				   									this.state.cityGroup[0].items.push({
-				   										label:list.name,
-				   										value:list.cityId
-				   									})
-				   								});
-				   	                        })
+													
+												value = this.state.provinceGroup[i]['items'][s].value;
+												label = this.state.provinceGroup[i]['items'][s].label;
+
+												currentCityId = this.defaultProvince[s].cities[0].cityId;
+
+
+												index = s;
+												currentCityName = this.defaultProvince[s].cities[0].name;
+												this.state.cityGroup[0].items.length = 0;
+												this.defaultProvince[s].cities.map((list, i) => {
+													this.state.cityGroup[0].items.push({
+														label: list.name,
+														value: list.cityId
+													})
+												});
+											});
+
 				   	                        this.setState({
 				   	                        	defaultCitySelect:[0],
 				   	                            currentProvinceId: value,
@@ -350,12 +362,19 @@ class App extends Component {
 				   	                            currnetSelectProvinceIndex:index,
 				   	                            currentCityId,
 				   	                            currentCityName
+				   	                        },()=>{
+				   	                        	
 				   	                        })
+
+
+				   	                        
 				   	                    }}
 				   	                    lang={{ leftBtn: '取消', rightBtn: '确定' }}
 				   	                    groups={this.state.provinceGroup}
 				   	                    show={this.state.showProvincePicker}
-				   	                   	onCancel={e=>{this.setState({showProvincePicker: false})}}
+				   	                   	onCancel={e=>{
+				   	                   		this.setState({showProvincePicker: false})
+				   	                   	}}
 				   	                />}
 	                {this.state.showCityPicker && <Picker
 	                	                 	defaultSelect={[this.state.currnetSelectCityIndex]}
@@ -569,6 +588,49 @@ class App extends Component {
 		});
 		this.selectedDateType = type;
 
+		return false;
+
+	}
+
+	toggleCityPicker(flag, e) {
+		e.preventDefault();
+		setTimeout(() => {
+			this.setState({
+				showCityPicker: flag
+			})
+		}, 0)
+		return false;
+	}
+
+	toggleProvincePicker(flag, e) {
+		e.preventDefault();
+		setTimeout(() => {
+			this.setState({
+				showProvincePicker: flag
+			})
+		}, 0)
+		return false;
+	}
+
+	toggleReasonPicker(flag, e) {
+
+		e.preventDefault();
+		setTimeout(() => {
+			this.setState({
+				showReasonPicker: flag
+			})
+		}, 0)
+		return false;
+	}
+	toggleJobPicker(flag, e) {
+
+		e.preventDefault();
+		setTimeout(() => {
+			this.setState({
+				showJobPicker: flag
+			})
+		}, 0)
+		return false;
 	}
 
 	showToast(msg) {
@@ -661,14 +723,15 @@ class App extends Component {
 				version: window.JSInterface && window.JSInterface.getVersion()
 			});
 
-
 			///alert(window.JSInterface ? window.JSInterface.getVersion() : 'error');
 
 			$('#zmiti-cover').remove();
 			if (navigator.onLine) {
 				this.request();
+			} else {
+				this.showToast('网络不给力,请检查您的网络设置。')
 			}
-		}, 20)
+		}, 2000)
 
 		var D = new Date();
 
@@ -696,6 +759,16 @@ class App extends Component {
 		arys2 = checkEndDate.split('-');
 		var edate = new Date(arys2[0], parseInt(arys2[1] - 1), arys2[2]);
 		return sdate <= edate;
+	}
+
+	log(opt) {
+		$.ajax({
+			url: window.baseUrl + 'msg/send_msg',
+			data: {
+				type: 'zmitilog',
+				content: JSON.stringify(opt),
+			}
+		})
 	}
 
 	request() {
