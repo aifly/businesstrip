@@ -105,7 +105,8 @@ input, textarea {
     z-index: 10; }
     .zmiti-main-ui .zmiti-index-page.active {
       -webkit-transform: translate(0, 0) scale(1);
-      transform: translate(0, 0) scale(1); }
+      transform: translate(0, 0) scale(1);
+      z-index: 100; }
     .zmiti-main-ui .zmiti-index-page.left {
       -webkit-transform: translate(-50%, 0) scale(1);
       transform: translate(-50%, 0) scale(1); }
@@ -243,7 +244,8 @@ input, textarea {
       transform: translate(100%, 0) scale(0.8); }
     .zmiti-main-ui .zmiti-result-page.active {
       -webkit-transform: translate(0, 0) scale(1);
-      transform: translate(0, 0) scale(1); }
+      transform: translate(0, 0) scale(1);
+      z-index: 100; }
     .zmiti-main-ui .zmiti-result-page.left {
       -webkit-transform: translate(-5rem, 0) scale(1);
       transform: translate(-5rem, 0) scale(1); }
@@ -452,6 +454,12 @@ input, textarea {
           padding: .4rem; }
           .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-result-invoice label {
             color: #ff672b; }
+        .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-nocost {
+          color: #ff672b;
+          text-indent: 2em;
+          margin: 0 auto 0;
+          padding-top: .4rem;
+          font-size: .48rem; }
         .zmiti-main-ui .zmiti-result-page > section .zmiti-travel-standard .zmiti-notice {
           margin: 20px 0;
           width: 100%;
@@ -512,4 +520,5 @@ input, textarea {
         position: relative;
         left: .5rem;
         width: auto; }
+
 /*# sourceMappingURL=index.css.map */

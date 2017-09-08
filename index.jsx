@@ -76,6 +76,7 @@ class App extends Component {
 
 				]
 			}],
+			cityType: 0, //城市类型，0 ：非北京 1：北京城区 2：北京郊区
 			cityGroup: [{
 				items: []
 			}],
@@ -218,81 +219,91 @@ class App extends Component {
 
 					 		<section className='zmiti-travel-standard'>
 					 			<div>
-					 				<h2>交通标准</h2>
-					 				<section className='zmiti-result-train'>
-					 					<img src='./assets/images/haveTrain.png'/>
-					 					<span>{this.state.train}</span>
-					 				</section>
-					 				<section className='zmiti-result-travels'>
-					 					<aside>
-					 						<img src='./assets/images/haveHight.png'/>
-					 						<span>{this.state.hightSpeedRail}</span>
-					 					</aside>
-					 					<aside>
-					 						<img src='./assets/images/haveSofe.png'/>
-					 						<span>{this.state.soft}</span>
-					 					</aside>
-					 				</section>
-					 				<section className='zmiti-result-travels'>
-					 					<aside>
-					 						<img src='./assets/images/haveSteamer.png'/>
-					 						<span>{this.state.steamer}</span>
-					 					</aside>
-					 					<aside>
-					 						<img src='./assets/images/haveAir.png'/>
-					 						<span>{this.state.air}</span>
-					 					</aside>
-					 				</section>
-					 				<h2>住宿标准</h2>
-					 				{!(this.state.live && this.state.busyLive) && <section className='zmiti-stay'>
-					 					<span>{this.state.live||this.state.busyLive}</span>元/天
-					 				</section>}
-
-					 				{this.state.live && this.state.busyLive && <section className='zmiti-stay'>
-					 					<aside>淡季：<span>{this.state.live}</span>元/天</aside>
-					 					<aside></aside>
-					 					<aside>旺季：<span>{this.state.busyLive}</span>元/天</aside>
-					 				</section>}
-
-					 				{this.state.busyDayArray.length>0&&<h2 className='zmiti-busyday-title'>旺季日期：</h2>}
-					 				{this.state.busyDayArray.length>0&&<section className='zmiti-busyday'>
-					 									 					{this.state.busyDayArray.map((item,o)=>{
-					 									 						return <div key={o}>
-					 									 							{item}
-					 									 						</div>
-					 									 					})}
-					 									 				</section>}
-					 				
-					 				<section className='zmiti-food-travel'>
-					 					<aside>
-					 						<h2>领取伙食补助</h2>
-					 						<div><span>{this.state.food*day1}</span>元 <label>({this.state.food}元/天)</label></div>
-					 					</aside>
-					 					<aside>
-					 						<h2>领取交通补助</h2>
-					 						<div><span>{this.state.traffic*day1}</span>元 <label>({this.state.traffic}元/天)</label></div>
-					 					</aside>
-					 				</section>
-
-					 				{this.state.reasonType === 2 
-					 					&& 
-					 					<section className='zmiti-food-travel zmiti-food-ticket'>
-											<aside>
-						 						<h2>
-						 							<div>凭票</div>
-						 							<div>报销</div>
-						 						</h2>
-						 						<div><span>{this.state.day*1<=2?0:this.state.food*day}</span><label>元 伙食费</label></div>
-						 					</aside>
-						 					<aside>
-						 						<div><span>{this.state.day*1<=2?0:this.state.traffic*day}</span><label>元 交通费</label></div>
-						 					</aside>
-						 				</section>}
-
-					 				<section className='zmiti-result-remark'>
-					 					{this.state.reasonType === 1 && <span>依据差旅费管理办法，您出差补助共{this.state.subsidy}元</span>}
-										{this.state.reasonType === 2 && <span>在公务所在地按标准据实凭票报销交通费和餐费，详见注意事项</span>}
-					 				</section>
+									{this.state.cityType === 0 && <div>
+														 					<h2>交通标准</h2>
+															 				<section className='zmiti-result-train'>
+															 					<img src='./assets/images/haveTrain.png'/>
+															 					<span>{this.state.train}</span>
+															 				</section>
+															 				<section className='zmiti-result-travels'>
+															 					<aside>
+															 						<img src='./assets/images/haveHight.png'/>
+															 						<span>{this.state.hightSpeedRail}</span>
+															 					</aside>
+															 					<aside>
+															 						<img src='./assets/images/haveSofe.png'/>
+															 						<span>{this.state.soft}</span>
+															 					</aside>
+															 				</section>
+															 				<section className='zmiti-result-travels'>
+															 					<aside>
+															 						<img src='./assets/images/haveSteamer.png'/>
+															 						<span>{this.state.steamer}</span>
+															 					</aside>
+															 					<aside>
+															 						<img src='./assets/images/haveAir.png'/>
+															 						<span>{this.state.air}</span>
+															 					</aside>
+															 				</section>
+															 				<h2>住宿标准</h2>
+															 				{!(this.state.live && this.state.busyLive) && <section className='zmiti-stay'>
+															 					<span>{this.state.live||this.state.busyLive}</span>元/天
+															 				</section>}
+									
+															 				{this.state.live && this.state.busyLive && <section className='zmiti-stay'>
+															 					<aside>淡季：<span>{this.state.live}</span>元/天</aside>
+															 					<aside></aside>
+															 					<aside>旺季：<span>{this.state.busyLive}</span>元/天</aside>
+															 				</section>}
+									
+															 				{this.state.busyDayArray.length>0&&<h2 className='zmiti-busyday-title'>旺季日期：</h2>}
+															 				{this.state.busyDayArray.length>0&&<section className='zmiti-busyday'>
+															 									 					{this.state.busyDayArray.map((item,o)=>{
+															 									 						return <div key={o}>
+															 									 							{item}
+															 									 						</div>
+															 									 					})}
+															 									 				</section>}
+															 				
+															 				<section className='zmiti-food-travel'>
+															 					<aside>
+															 						<h2>领取伙食补助</h2>
+															 						<div><span>{this.state.food*day1}</span>元 <label>({this.state.food}元/天)</label></div>
+															 					</aside>
+															 					<aside>
+															 						<h2>领取交通补助</h2>
+															 						<div><span>{this.state.traffic*day1}</span>元 <label>({this.state.traffic}元/天)</label></div>
+															 					</aside>
+															 				</section>
+									
+															 				{this.state.reasonType === 2 
+															 					&& 
+															 					<section className='zmiti-food-travel zmiti-food-ticket'>
+																					<aside>
+																 						<h2>
+																 							<div>凭票</div>
+																 							<div>报销</div>
+																 						</h2>
+																 						<div><span>{this.state.day*1<=2?0:this.state.food*day}</span><label>元 伙食费</label></div>
+																 					</aside>
+																 					<aside>
+																 						<div><span>{this.state.day*1<=2?0:this.state.traffic*day}</span><label>元 交通费</label></div>
+																 					</aside>
+																 				</section>}
+									
+															 				<section className='zmiti-result-remark'>
+															 					{this.state.reasonType === 1 && <span>依据差旅费管理办法，您出差补助共{this.state.subsidy}元</span>}
+																				{this.state.reasonType === 2 && <span>在公务所在地按标准据实凭票报销交通费和餐费，详见注意事项</span>}
+															 				</section>
+														 				</div>}
+									{(this.state.cityType === 1||(this.state.reasonType === 1&&this.state.cityType === 2)) && <section className='zmiti-nocost'>依据差旅费管理办法，出差目的地北京除事由检查、调研、考察等公务且位于北京远郊区县外，不报销住宿费、不领取交通及餐费补助。</section>}
+									{(this.state.reasonType === 2&&this.state.cityType === 2)&& 
+										<div className=''>
+											<div className='zmiti-nocost'>依据差旅费管理办法，出差目的地北京远郊区县，事由调研检查、调研、考察等公务外出活动，如下表。</div>
+											<div style={{fontSize:'.4rem',margin:'.4rem auto'}}>（门头沟区、房山区、通州区、顺义区、昌平区、大兴区、怀柔区、平谷区、密云区、延庆区）</div>
+											<img src='./assets/images/1.png'/>
+										</div>
+									}
 
 					 				<h2>发票信息</h2>
 					 				<section className='zmiti-result-invoice'>
@@ -329,9 +340,6 @@ class App extends Component {
 				   	                        	currentCityId = -1,
 				   	                        	currentCityName = '';
 				   							var index = -1;
-
-
-				   					
 
 				   							
 				   	                        selected.forEach( (s, i)=> {
@@ -685,6 +693,8 @@ class App extends Component {
 	componentDidMount() {
 
 
+		var img = new Image();
+		img.src = './assets/images/1.png'
 
 		this.scroll = new IScroll(this.refs['zmiti-index-scroll-wrap'], {
 			scrollbars: true
@@ -787,6 +797,8 @@ class App extends Component {
 			}
 			if (data.getret === 0) {
 
+				//console.log(data);
+
 				this.state.currentCountry = data.result.citys[0].name;
 
 
@@ -853,6 +865,7 @@ class App extends Component {
 		}
 
 
+
 		$.ajax({
 			type: 'post',
 			url: window.baseUrl + 'travel/get_travecost/',
@@ -871,13 +884,32 @@ class App extends Component {
 			if (typeof data === 'string') {
 				data = JSON.parse(data);
 			}
+
+			//console.log(this.state.currentCityId);
 			if (data.getret === 0) {
 				this.state.indexClass = 'left';
 				this.state.resultClass = 'active';
+				this.forceUpdate();
 
+
+				var arr = [500, 501, 502, 503, 506, 507];
+				var type = 2;
+				if (this.state.currentProvinceId === 2) {
+					arr.forEach((a, i) => {
+						if (a === this.state.currentCityId) {
+							type = 1;
+						}
+					})
+				} else {
+					type = 0;
+				}
+				this.state.cityType = type;
 				//data.result.busyDayArray =  ['07月01日-09月30日','11月01日-12月31日','11月01日-12月31日','11月01日-12月31日'];
 				this.setState(data.result, () => {
 					this.resultScroll.refresh();
+					setTimeout(() => {
+						this.resultScroll.refresh();
+					}, 1000)
 				});
 			}
 		});

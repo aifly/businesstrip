@@ -103,6 +103,7 @@ input, textarea {
 
     &.active {
       @include transform(translate(0, 0) scale(1));
+      z-index: 100;
     }
     &.left {
       @include transform(translate(-50%, 0) scale(1));
@@ -299,6 +300,7 @@ input, textarea {
     }
     &.active {
       @include transform(translate(0, 0) scale(1));
+      z-index: 100;
     }
     &.left {
       @include transform(translate(-5rem, 0) scale(1));
@@ -559,6 +561,13 @@ input, textarea {
           label {
             color: #ff672b;
           }
+        }
+        .zmiti-nocost {
+          color: #ff672b;
+          text-indent: 2em;
+          margin: 0 auto 0;
+          padding-top: .4rem;
+          font-size: .48rem;
         }
         .zmiti-notice {
           margin: 20px 0;
