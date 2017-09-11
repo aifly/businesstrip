@@ -292,16 +292,22 @@ class App extends Component {
 																 				</section>}
 									
 															 				<section className='zmiti-result-remark'>
-															 					{this.state.reasonType === 1 && <span>依据差旅费管理办法，您出差补助共{this.state.subsidy}元</span>}
+															 					{this.state.reasonType === 1 && <span>您出差补助共{this.state.subsidy}元</span>}
 																				{this.state.reasonType === 2 && <span>在公务所在地按标准据实凭票报销交通费和餐费，详见注意事项</span>}
 															 				</section>
 														 				</div>}
-									{(this.state.cityType === 1||(this.state.reasonType === 1&&this.state.cityType === 2)) && <section className='zmiti-nocost'>依据差旅费管理办法，出差目的地北京除事由检查、调研、考察等公务且位于北京远郊区县外，不报销住宿费、不领取交通及餐费补助。</section>}
+									{this.state.cityType > 0 && (this.state.reasonType === 1) &&
+										 <section className='zmiti-nocost'>参加会议、培训，不报销住宿费、不领取交通及餐费补助。</section>
+									}
+									{(this.state.reasonType === 2&&this.state.cityType === 1)&& 
+										<section className='zmiti-nocost'>在北京城六区的检查、调研、考察等公务活动，凭发票据实报销交通费、按50元/餐凭票报销餐费。</section>
+									}
 									{(this.state.reasonType === 2&&this.state.cityType === 2)&& 
 										<div className=''>
-											<div className='zmiti-nocost'>依据差旅费管理办法，出差目的地北京远郊区县，事由调研检查、调研、考察等公务外出活动，如下表。</div>
-											<div style={{fontSize:'.4rem',margin:'.4rem auto'}}>（门头沟区、房山区、通州区、顺义区、昌平区、大兴区、怀柔区、平谷区、密云区、延庆区）</div>
-											<img src='./assets/images/1.png'/>
+											<div className='zmiti-nocost' hidden>出差目的地北京远郊区县，事由调研检查、调研、考察等公务外出活动，如下表。</div>
+											<div style={{fontSize:'.4rem',margin:'.4rem auto'}} hidden>（门头沟区、房山区、通州区、顺义区、昌平区、大兴区、怀柔区、平谷区、密云区、延庆区）</div>
+											<h1 style={{height:'.5rem'}}></h1>
+											<img  src='./assets/images/1.png'/>
 										</div>
 									}
 
