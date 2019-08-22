@@ -6,10 +6,11 @@
 	<meta name="format-detection" content="telephone=no,email=no" />
 	<title>出差宝</title>
 	<script>
-		document.addEventListener("touchmove",function(e){e.preventDefault();});
+		document.addEventListener("touchmove",function(e){e.preventDefault();},{ passive:false});
 		document.querySelector('html').style.fontSize=document.documentElement.clientWidth /10 + 'px';
 	</script>
 	<style>
+		*{ touch-action: pan-y; } 
 		.zmiti-cover {
 	    z-index: 10000;
 	    position: absolute;
@@ -45,8 +46,9 @@
 			var u = navigator.userAgent;
 			var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;
 
-			window.baseUrl='http://api.zmiti.com/v2/';
-			window.companyid ='8e90b777-7f68-c648-1350-59040c9d81df';
+			window.baseUrl='http://newapi.zmiti.com/';
+			window.companyid ='5';
+			window.productid ='8044104590';
 			window.ajaxType = 'POST';
 			
 			window.showCover = true;
@@ -54,11 +56,11 @@
 		</script>
 
 		<!--
-		<script src='http://localhost:4002/index.js'></script>
-		
+			
+			<script src='./assets/js/vendor.js'></script>
+			<script src='./assets/js/index.js'></script>
 		-->
-		<script src='./assets/js/vendor.js'></script>
-		<script src='./assets/js/index.js'></script>
+		<script src='http://localhost:4002/index.js'></script>
 		
 	
 </body>
